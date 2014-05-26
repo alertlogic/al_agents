@@ -20,6 +20,7 @@
 pkg_base_url    = node["alertlogic"]["pkg_base_url"]
 controller_host = node["alertlogic"]["controller_host"]
 provision_key   = node["alertlogic"]["provision_key"]
+firewall_rules  = node["alertlogic"]["firewall"]
 
 pkg_name        = "al-log-agent" 
 
@@ -37,6 +38,7 @@ if platform_family?("debian")
         end
     pkg_provider = Chef::Provider::Package::Dpkg
     pkg_check_cmd = "dpkg-query -W '#{pkg_name}'"
+    semanage_pkg   = "policycoreutils"
 elsif platform_family?("rhel")
     pkg_vsn = node["alertlogic"]["pkg_vsn"]["rpm"]
     pkg_full_name =
@@ -49,6 +51,7 @@ elsif platform_family?("rhel")
         end
     pkg_provider = Chef::Provider::Package::Rpm
     pkg_check_cmd = "rpm -qa | grep -q '#{pkg_name}'"
+    semanage_pkg   = "policycoreutils-python"
 else
     raise "Unsupported platform: #{node[:platform]}"
 end
@@ -70,17 +73,41 @@ end
 
 
 ## SeLinux
+package semanage_pkg do
+    action :install
+end
+
+bash "update selinux" do
+    code 'semanage port -a -t syslogd_port_t -p tcp 1514'
+    only_if 'sestatus | grep -q "SELinux status:\s*enabled" \
+             && sestatus | grep -q "Current mode:\s*enforcing" \
+             && ( semanage port -l | grep "syslogd_port_t\s*tcp.*\<1514\>" \
+                  && exit 1 || exit 0 ) #swap status code'
+end
+
 
 ## Firewall
 ## TODO: not persistent
-bash "update iptables OUTPUT chain" do
-    code <<-EOH
-        iptables -A OUTPUT -m tcp -p tcp -d 204.110.218.96/27 --dport 443 -j ACCEPT
-        iptables -A OUTPUT -m tcp -p tcp -d 204.110.219.96/27 --dport 443 -j ACCEPT
-    EOH
-    not_if "iptables -L | grep -q 204\.110\.21[89]\."
-end
 
+if firewall_rules.any?
+    firewall_cmd =
+        firewall_rules.map { |r|
+            (fw_net, fw_port) = r.split(":")
+                "iptables -A OUTPUT -m tcp -p tcp -d #{fw_net}" \
+                          " --dport #{fw_port} -j ACCEPT"
+            }.join("; ")
+
+    firewall_check_cmd =
+        firewall_rules.map { |r|
+            (fw_net, fw_port) = r.split(":")
+            "iptables -L | grep -q #{fw_net}"
+        }.join(" || ")
+
+    bash "update iptables OUTPUT chain" do
+        code    firewall_cmd
+        not_if  firewall_check_cmd
+    end
+end
 
 controller_host_code =
     if controller_host 

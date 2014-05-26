@@ -50,6 +50,12 @@ Attributes
     <td><tt>"vaporator.alertlogic.com"</tt></td>
   </tr>
   <tr>
+    <td><tt>['al-agents']['firewall']</tt></td>
+    <td>Array</td>
+    <td>Array of allowed destination networks</td>
+    <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
+  </tr>
+  <tr>
     <td><tt>['al-agents']['provision_key']</tt></td>
     <td>String</td>
     <td>Unique Registration Key. Used during the provisioning stage.</td>
