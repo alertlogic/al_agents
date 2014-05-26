@@ -45,9 +45,15 @@ Attributes
   </tr>
   <tr>
     <td><tt>['al-agents']['controller_host']</tt></td>
-    <td>String</td>
+    <td>String or nil</td>
     <td>Controller host name.</td>
     <td><tt>"vaporator.alertlogic.com"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al-agents']['inst_type']</tt></td>
+    <td>String or nil</td>
+    <td>Instance type. May be: "host", "role", nil</td>
+    <td><tt>"host"</tt></td>
   </tr>
   <tr>
     <td><tt>['al-agents']['firewall']</tt></td>

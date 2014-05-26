@@ -19,6 +19,7 @@
 
 pkg_base_url    = node["alertlogic"]["pkg_base_url"]
 controller_host = node["alertlogic"]["controller_host"]
+inst_type       = node["alertlogic"]["inst_type"]
 provision_key   = node["alertlogic"]["provision_key"]
 firewall_rules  = node["alertlogic"]["firewall"]
 
@@ -115,6 +116,12 @@ controller_host_code =
     else
         ""
     end
+inst_type_code =
+    if inst_type
+        "--inst-type #{inst_type}"
+    else
+        ""
+    end
 bash "al-log-agent configure" do
     user "root"
     code "/etc/init.d/#{pkg_name} configure #{controller_host_code}"
@@ -123,11 +130,10 @@ end
 
 bash "al-log-agent provision" do
     user "root"
-    code "/etc/init.d/#{pkg_name} provision --key #{provision_key}"
+    code "/etc/init.d/#{pkg_name} provision --key #{provision_key} #{inst_type_code}"
     not_if "test -f /var/alertlogic/etc/host_key.pem"
 end
 
-## TODO: autostart
 bash "al-log-agent start" do
     user "root"
     code "/etc/init.d/#{pkg_name} start"
