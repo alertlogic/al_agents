@@ -17,18 +17,18 @@
 # limitations under the License.
 #
 
-pkg_base_url    = node["alertlogic"]["pkg_base_url"]
-controller_host = node["alertlogic"]["controller_host"]
-inst_type       = node["alertlogic"]["inst_type"]
-provision_key   = node["alertlogic"]["provision_key"]
-firewall_rules  = node["alertlogic"]["firewall"]
+pkg_base_url    = node["alertlogic"]["log-agent"]["pkg_base_url"]
+controller_host = node["alertlogic"]["log-agent"]["controller_host"]
+inst_type       = node["alertlogic"]["log-agent"]["inst_type"]
+provision_key   = node["alertlogic"]["log-agent"]["provision_key"]
+firewall_rules  = node["alertlogic"]["log-agent"]["firewall"]
 
 pkg_name        = "al-log-agent" 
 
 node_arch = node["kernel"]["machine"]
 
 if platform_family?("debian")
-    pkg_vsn = node["alertlogic"]["pkg_vsn"]["deb"]
+    pkg_vsn = node["alertlogic"]["log-agent"]["pkg_vsn"]["deb"]
     pkg_full_name =
         if node_arch == "x86_64"
             "al-log-agent_#{pkg_vsn}_amd64.deb"
@@ -41,7 +41,7 @@ if platform_family?("debian")
     pkg_check_cmd = "dpkg-query -W '#{pkg_name}'"
     semanage_pkg   = "policycoreutils"
 elsif platform_family?("rhel")
-    pkg_vsn = node["alertlogic"]["pkg_vsn"]["rpm"]
+    pkg_vsn = node["alertlogic"]["log-agent"]["pkg_vsn"]["rpm"]
     pkg_full_name =
         if node_arch == "x86_64"
             "al-log-agent-#{pkg_vsn}.x86_64.rpm"

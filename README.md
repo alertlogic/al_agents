@@ -26,43 +26,43 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['al-agents']['pkg_base_url']</tt></td>
+    <td><tt>['al-agents']['log-agent']['pkg_base_url']</tt></td>
     <td>String</td>
     <td>Package download URL.</td>
     <td><tt>"https://scc.alertlogic.net/software"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['pkg_vsn']['deb']</tt></td>
+    <td><tt>['al-agents']['log-agent']['pkg_vsn']['deb']</tt></td>
     <td>String</td>
     <td>Debian package version to be downloaded.</td>
     <td><tt>"LATEST"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['pkg_vsn']['rpm']</tt></td>
+    <td><tt>['al-agents']['log-agent']['pkg_vsn']['rpm']</tt></td>
     <td>String</td>
     <td>Redhat package version to be downloaded.</td>
     <td><tt>"LATEST-1"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['controller_host']</tt></td>
+    <td><tt>['al-agents']['log-agent']['controller_host']</tt></td>
     <td>String or nil</td>
     <td>Controller host name.</td>
     <td><tt>"vaporator.alertlogic.com"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['inst_type']</tt></td>
+    <td><tt>['al-agents']['log-agent']['inst_type']</tt></td>
     <td>String or nil</td>
     <td>Instance type. May be: "host", "role", nil</td>
     <td><tt>"host"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['firewall']</tt></td>
+    <td><tt>['al-agents']['log-agent']['firewall']</tt></td>
     <td>Array</td>
     <td>Array of allowed destination networks</td>
     <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['provision_key']</tt></td>
+    <td><tt>['al-agents']['log-agent']['provision_key']</tt></td>
     <td>String</td>
     <td>Unique Registration Key. Used during the provisioning stage.</td>
     <td><tt>nil</tt></td>
