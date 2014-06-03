@@ -1,5 +1,5 @@
-al-agents cookbook
-=========================
+# al_agents cookbook
+
 
 Installs and configures Log and Threat Manager agents.
 
@@ -8,15 +8,16 @@ Threat Manager’s managed intrusion detection and vulnerability scanning servic
 provide ongoing insights into the threats and vulnerabilities affecting your
 environment.
 
-Requirements
-------------
+## Requirements
 
-* Os: Ubuntu server 12.04, 13.10 and CentOS 6.5.
+* Os: Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
 * Arch: x86_64, i386.
 * System logging: rsyslog, syslog-ng.
 
-Attributes
-----------
+
+## Recipes
+
+### al_agents::log_agent
 
 <table>
   <tr>
@@ -26,65 +27,125 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['pkg_base_url']</tt></td>
+    <td><tt>['al_agents']['log-agent']['pkg_base_url']</tt></td>
     <td>String</td>
     <td>Package download URL.</td>
     <td><tt>"https://scc.alertlogic.net/software"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['pkg_vsn']['deb']</tt></td>
+    <td><tt>['al_agents']['log-agent']['pkg_vsn']['deb']</tt></td>
     <td>String</td>
     <td>Debian package version to be downloaded.</td>
-    <td><tt>"LATEST"</tt></td>
+    <td><tt>"_LATEST_"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['pkg_vsn']['rpm']</tt></td>
+    <td><tt>['al_agents']['log-agent']['pkg_vsn']['rpm']</tt></td>
     <td>String</td>
     <td>Redhat package version to be downloaded.</td>
-    <td><tt>"LATEST-1"</tt></td>
+    <td><tt>"-LATEST-1."</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['controller_host']</tt></td>
+    <td><tt>['al_agents']['log-agent']['controller_host']</tt></td>
     <td>String or nil</td>
     <td>Controller host name.</td>
     <td><tt>"vaporator.alertlogic.com"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['inst_type']</tt></td>
+    <td><tt>['al_agents']['log-agent']['inst_type']</tt></td>
     <td>String or nil</td>
     <td>Instance type. May be: "host", "role", nil</td>
     <td><tt>"host"</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['firewall']</tt></td>
+    <td><tt>['al_agents']['log-agent']['firewall']</tt></td>
     <td>Array</td>
     <td>Array of allowed destination networks</td>
     <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
   </tr>
   <tr>
-    <td><tt>['al-agents']['log-agent']['provision_key']</tt></td>
+    <td><tt>['al_agents']['log-agent']['provision_key']</tt></td>
     <td>String</td>
     <td>Unique Registration Key. Used during the provisioning stage.</td>
     <td><tt>nil</tt></td>
   </tr>
 </table>
 
-Usage
------
-#### al-agents::default
-Installs `al-agents::log-agent`.
-
-#### al-agents::log-agent
-`default["alertlogic"]["provision_key"]` must be non empty.
+`default["alertlogic"]["log-agent"]["provision_key"]` must be non empty.
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[al-agents::log-agent]"
+    "recipe[al_agents::log_agent]"
   ]
 }
 ```
+
+
+### al_agents::threat_host
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['pkg_base_url']</tt></td>
+    <td>String</td>
+    <td>Package download URL.</td>
+    <td><tt>"https://scc.alertlogic.net/software"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['pkg_vsn']['deb']</tt></td>
+    <td>String</td>
+    <td>Debian package version to be downloaded.</td>
+    <td><tt>"_LATEST."</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['pkg_vsn']['rpm']</tt></td>
+    <td>String</td>
+    <td>Redhat package version to be downloaded.</td>
+    <td><tt>"_LATEST."</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['controller_host']</tt></td>
+    <td>String or nil</td>
+    <td>Controller host name.</td>
+    <td><tt>"vaporator.alertlogic.com"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['inst_type']</tt></td>
+    <td>String or nil</td>
+    <td>Instance type. May be: "host", "role", nil</td>
+    <td><tt>"host"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['firewall']</tt></td>
+    <td>Array</td>
+    <td>Array of allowed destination networks</td>
+    <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['al_agents']['threat-host']['provision_key']</tt></td>
+    <td>String</td>
+    <td>Unique Registration Key. Used during the provisioning stage.</td>
+    <td><tt>nil</tt></td>
+  </tr>
+</table>
+
+`default["alertlogic"]["threat-host"]["provision_key"]` must be non empty.
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[al_agents::threat_host]"
+  ]
+}
+```
+
 
 Contributing
 ------------

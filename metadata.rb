@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: al-agents
+# Cookbook Name:: al_agents
 #
 # Copyright (c) 2014, Alert Logic.
 #
@@ -16,14 +16,14 @@
 # limitations under the License.
 #
 
-name             'al-agents'
+name             'al_agents'
 maintainer       'Alert Logic'
 maintainer_email 'support@alertlogic.com'
 license          'Apache 2.0'
 description      'Installs and configures log and threat agents'
 version          '0.1.0'
 
-recipe            "al-agents::log-agent", "Installs log manager agent"
+recipe            "al_agents::log_agent", "Installs log manager agent"
 
 %w{ubuntu debian centos redhat fedora}.each do |os|
   supports os

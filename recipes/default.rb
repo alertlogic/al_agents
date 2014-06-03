@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: al-agents
+# Cookbook Name:: al_agents
 # Recipe:: default
 #
 # Copyright (c) 2014, Alert Logic.
@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "al-agents::log-agent"
+include_recipe "al_agents::log_agent"

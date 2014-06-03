@@ -1,6 +1,6 @@
-al-agents CHANGELOG
+al_agents CHANGELOG
 ==========================
 
 0.1.0
 -----
-- [Daniil Churikov] - Initial release of al-agents cookbook
+- [Daniil Churikov] - Initial release of al_agents cookbook
