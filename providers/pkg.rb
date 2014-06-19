@@ -5,7 +5,7 @@ action :install do
         pkg_full_name =
             if node.kernel.machine == "x86_64"
                 "#{pkg_name}#{new_resource.vsn["deb"]}amd64.deb"
-            elsif node.kernel.machine == "i386"
+            elsif ["i386", "i568", "i686"].include? node.kernel.machine
                 "#{pkg_name}#{new_resource.vsn["deb"]}i386.deb"
             else
                 raise "Unsupported platform"
@@ -16,7 +16,7 @@ action :install do
         pkg_full_name =
             if node.kernel.machine == "x86_64"
                 "#{pkg_name}#{new_resource.vsn["rpm"]}x86_64.rpm"
-            elsif node.kernel.machine == "i386"
+            elsif ["i386", "i568", "i686"].include? node.kernel.machine
                 "#{pkg_name}#{new_resource.vsn["rpm"]}i386.rpm"
             else
                 raise "Unsupported platform"
