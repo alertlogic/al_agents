@@ -75,13 +75,27 @@ al_agents_pkg pkg_name do
     action          :install
 end
 
-## Syslog
-## TODO: syslog-ng, systemd
 bash "update /etc/rsyslog.conf and restart rsyslog" do
     user "root"
         code <<-EOH
             echo "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" >> /etc/rsyslog.conf
-            service rsyslog restart
+            # return 0 in case of restart
+            ps -e | grep -q rsyslog && service rsyslog restart || echo "rsyslog not running"
         EOH
     not_if 'grep -q "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" /etc/rsyslog.conf' 
+end
+
+bash "update /etc/syslog-ng/syslog-ng.conf and restart rsyslog-ng" do
+    user "root"
+        code <<-EOH
+            CONF=/etc/syslog-ng/syslog-ng.conf
+
+            # detect default source name
+            DEFSRC=$( cat $CONF | grep -e '^source .* {$' | sed 's/^source \\(.*\\) {$/\\1/g' )
+
+            echo 'destination d_alertlogic {tcp("localhost" port(1514));};' >> $CONF
+            echo 'log { source('$DEFSRC'); destination(d_alertlogic); };' >> $CONF
+            ps -e | grep -q syslog-ng && service syslog-ng restart || echo "syslog-ng not running"
+        EOH
+    not_if 'grep -q "alertlogic" /etc/syslog-ng/syslog-ng.conf'
 end
