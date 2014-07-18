@@ -1,12 +1,17 @@
 # al_agents cookbook
 
-
 Installs and configures Log and Threat Manager agents.
 
 Log Manager collects and normalizes log data from your entire infrastructure.
 Threat Manager’s managed intrusion detection and vulnerability scanning services
 provide ongoing insights into the threats and vulnerabilities affecting your
 environment.
+
+1. [Requirements](#requirements)
+2. [Chef recipes](#recipes)
+3. [CloudInit](#cloudinit)
+4. [Contributing](#contributing)
+5. [License](#license)
 
 ## Requirements
 
@@ -18,147 +23,88 @@ environment.
 ## Recipes
 
 ### al_agents::log_agent
+All the attributes are accessible under `node['alertlogic']['log-agent']`
+section.
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['pkg_base_url']</tt></td>
-    <td>String</td>
-    <td>Package download URL.</td>
-    <td><tt>"https://scc.alertlogic.net/software"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['pkg_vsn']['deb']</tt></td>
-    <td>String</td>
-    <td>Debian package version to be downloaded.</td>
-    <td><tt>"_LATEST_"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['pkg_vsn']['rpm']</tt></td>
-    <td>String</td>
-    <td>Redhat package version to be downloaded.</td>
-    <td><tt>"-LATEST-1."</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['controller_host']</tt></td>
-    <td>String or nil</td>
-    <td>Controller host name.</td>
-    <td><tt>"vaporator.alertlogic.com"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['inst_type']</tt></td>
-    <td>String or nil</td>
-    <td>Instance type. May be: "host", "role", nil</td>
-    <td><tt>"host"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['firewall']</tt></td>
-    <td>Array</td>
-    <td>Array of allowed destination networks</td>
-    <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['log-agent']['provision_key']</tt></td>
-    <td>String</td>
-    <td>Unique Registration Key. Used during the provisioning stage.</td>
-    <td><tt>nil</tt></td>
-  </tr>
-</table>
+| Key                   | Description          | Default                               |
+| --------------------- | -------------------- | ------------------------------------- |
+| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
+| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST_"`       |
+| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
+| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
+| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
 
-`default["alertlogic"]["log-agent"]["provision_key"]` must be non empty.
 
+Example:
 ```json
 {
-  "name":"my_node",
+  "alertlogic": {
+      "log-agent": {
+          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
+      }
+  },
   "run_list": [
     "recipe[al_agents::log_agent]"
   ]
 }
 ```
 
-
 ### al_agents::threat_host
+All the attributes are accessible under `node['alertlogic']['threat-host']`
+section.
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['pkg_base_url']</tt></td>
-    <td>String</td>
-    <td>Package download URL.</td>
-    <td><tt>"https://scc.alertlogic.net/software"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['pkg_vsn']['deb']</tt></td>
-    <td>String</td>
-    <td>Debian package version to be downloaded.</td>
-    <td><tt>"_LATEST."</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['pkg_vsn']['rpm']</tt></td>
-    <td>String</td>
-    <td>Redhat package version to be downloaded.</td>
-    <td><tt>"_LATEST."</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['controller_host']</tt></td>
-    <td>String or nil</td>
-    <td>Controller host name.</td>
-    <td><tt>"vaporator.alertlogic.com"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['inst_type']</tt></td>
-    <td>String or nil</td>
-    <td>Instance type. May be: "host", "role", nil</td>
-    <td><tt>"host"</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['firewall']</tt></td>
-    <td>Array</td>
-    <td>Array of allowed destination networks</td>
-    <td><tt>["204.110.218.96/27:443", "204.110.219.96/27:443"]</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['al_agents']['threat-host']['provision_key']</tt></td>
-    <td>String</td>
-    <td>Unique Registration Key. Used during the provisioning stage.</td>
-    <td><tt>nil</tt></td>
-  </tr>
-</table>
+| Key                   | Description          | Default                               |
+| --------------------- | -------------------- | ------------------------------------- |
+| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
+| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST."`       |
+| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"_LATEST."`     |
+| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
+| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
 
-`default["alertlogic"]["threat-host"]["provision_key"]` must be non empty.
 
+Example:
 ```json
 {
-  "name":"my_node",
+  "alertlogic": {
+      "threat-host": {
+          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
+      }
+  },
   "run_list": [
     "recipe[al_agents::threat_host]"
   ]
 }
 ```
 
+## CloudInit
+[CloudInit](http://cloudinit.readthedocs.org/) is the way to install something
+onto cloud instances (i.e. amazon ec2).
+You may find useful examples under [cloud-init](cloud-init/) directory.
+In case of amazon ec2 just pass this .yml file as `user-data`, do not forget
+to change `provision_key`.
+This will install chef-client to your instance, download this cookbook and
+run `chef-solo`.
 
-Contributing
-------------
+Note that in case of amazon ec2 `user-data` will be accessible to any
+user from within this instance.
+
+
+## Contributing
+
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
 4. Write tests for your change (if applicable)
 5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+6. Submit a Pull Request to `contrib` branch using Github
 
-License and Authors
--------------------
+## License
+
 Distributed under the Apache 2.0 license.
 
-Authors:
+### Authors:
 * Churikov Daniil <dchurikov@alertlogic.com>
