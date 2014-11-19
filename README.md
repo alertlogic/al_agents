@@ -22,7 +22,36 @@ environment.
 
 ## Recipes
 
-### al_agents::log_agent
+### al_agents::agent
+All the attributes are accessible under `node['alertlogic']['agent']`
+section.
+
+| Key                   | Description          | Default                               |
+| --------------------- | -------------------- | ------------------------------------- |
+| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
+| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST_"`       |
+| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
+| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
+| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
+
+
+Example:
+```json
+{
+  "alertlogic": {
+      "agent": {
+          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
+      }
+  },
+  "run_list": [
+    "recipe[al_agents::agent]"
+  ]
+}
+```
+
+### al_agents::log_agent (DEPRECATED)
 All the attributes are accessible under `node['alertlogic']['log-agent']`
 section.
 
@@ -51,7 +80,7 @@ Example:
 }
 ```
 
-### al_agents::threat_host
+### al_agents::threat_host (DEPRECATED)
 All the attributes are accessible under `node['alertlogic']['threat-host']`
 section.
 
