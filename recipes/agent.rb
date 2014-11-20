@@ -85,7 +85,7 @@ bash "update /etc/rsyslog.conf and restart rsyslog" do
     not_if 'grep -q "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" /etc/rsyslog.conf'
 end
 
-bash "update /etc/syslog-ng/syslog-ng.conf and restart rsyslog-ng" do
+bash "update /etc/syslog-ng/syslog-ng.conf and restart syslog-ng" do
     user "root"
         code <<-EOH
             CONF=/etc/syslog-ng/syslog-ng.conf
