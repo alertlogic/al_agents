@@ -82,6 +82,7 @@ bash "update /etc/rsyslog.conf and restart rsyslog" do
             # return 0 in case of restart
             ps -e | grep -q rsyslog && service rsyslog restart || echo "rsyslog not running"
         EOH
+    only_if do ::File.exist?('/etc/rsyslog.conf') end
     not_if 'grep -q "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" /etc/rsyslog.conf'
 end
 
@@ -97,5 +98,6 @@ bash "update /etc/syslog-ng/syslog-ng.conf and restart syslog-ng" do
             echo 'log { source('$DEFSRC'); destination(d_alertlogic); };' >> $CONF
             ps -e | grep -q syslog-ng && service syslog-ng restart || echo "syslog-ng not running"
         EOH
+    only_if do ::File.exist?('/etc/syslog-ng/syslog-ng.conf') end
     not_if 'grep -q "alertlogic" /etc/syslog-ng/syslog-ng.conf'
 end
