@@ -56,7 +56,7 @@ action :install do
 
     inst_type_code =
         if new_resource.inst_type
-            "--inst-type #{inst_type}"
+            "--inst-type #{new_resource.inst_type}"
         else
             ""
         end
