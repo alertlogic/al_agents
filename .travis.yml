@@ -1,0 +1,16 @@
+language: bash
+
+before_install:
+  ## -E to preserve env variables inside sudo, important for $PROVISION_KEY
+  - sudo -E ./chef_solo.sh
+
+install:
+  - sudo sh -c "curl -L https://www.opscode.com/chef/install.sh | bash"
+
+script:
+  - sudo chef-solo -c /etc/chef/solo.rb -j /etc/chef/node.json
+
+branches:
+  only:
+    - master
+    - devel

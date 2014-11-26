@@ -7,6 +7,8 @@ Threat Manager’s managed intrusion detection and vulnerability scanning servic
 provide ongoing insights into the threats and vulnerabilities affecting your
 environment.
 
+[![Build Status](https://travis-ci.org/alertlogic/al_agents.svg)](http://travis-ci.org/alertlogic/al_agents)
+
 1. [Requirements](#requirements)
 2. [Chef recipes](#recipes)
 3. [CloudInit](#cloudinit)
@@ -129,7 +131,7 @@ user from within this instance.
 3. Write your change
 4. Write tests for your change (if applicable)
 5. Run the tests, ensuring they all pass
-6. Submit a Pull Request to `contrib` branch using Github
+6. Submit a Pull Request to `master` branch using Github
 
 ## License
 
