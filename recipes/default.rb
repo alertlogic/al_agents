@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "al_agents::log_agent"
+include_recipe "al_agents::agent"
