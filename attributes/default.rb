@@ -9,7 +9,7 @@ default["alertlogic"]["agent"]["inst_type"] = nil
 default["alertlogic"]["agent"]["firewall"] = [
     # allow destination "network/mask:port"
     "204.110.218.96/27:443",
-    "204.110.219.96/27:443"
+    "185.54.124.96/27:443"
 ]
 default["alertlogic"]["agent"]["provision_key"] = nil
 
@@ -24,7 +24,7 @@ default["alertlogic"]["log-agent"]["inst_type"] = nil
 default["alertlogic"]["log-agent"]["firewall"] = [
     # allow destination "network/mask:port"
     "204.110.218.96/27:443",
-    "204.110.219.96/27:443"
+    "185.54.124.96/27:443"
 ]
 default["alertlogic"]["log-agent"]["provision_key"] = nil
 
@@ -43,6 +43,6 @@ default["alertlogic"]["threat-host"]["firewall"] = [
     # "<appliance_ip>/32:443",  # agent updates (singe point egress)
     # "<appliance_ip>/32:7777", # agent data transport (between agent and appliance on local network)
     "204.110.218.96/27:443",
-    "204.110.219.96/27:443"
+    "185.54.124.96/27:443"
 ]
 default["alertlogic"]["threat-host"]["provision_key"] = nil

@@ -21,9 +21,9 @@ maintainer       'Alert Logic'
 maintainer_email 'support@alertlogic.com'
 license          'Apache 2.0'
 description      'Installs and configures log and threat agents'
-version          '0.1.0'
+version          '0.2.0'
 
-recipe            "al_agents::log_agent", "Installs log manager agent"
+recipe            "al_agents::agent", "Installs AL Universal agent"
 
 %w{ubuntu debian centos redhat fedora}.each do |os|
   supports os

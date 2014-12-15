@@ -35,7 +35,7 @@ section.
 | `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
 | `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
 | `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
 | `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
 
 
@@ -64,7 +64,7 @@ section.
 | `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
 | `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
 | `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
 | `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
 
 
@@ -93,7 +93,7 @@ section.
 | `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"_LATEST."`     |
 | `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
 | `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "204.110.219.96/27:443"]` |
+| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
 | `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
 
 
