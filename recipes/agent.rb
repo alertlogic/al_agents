@@ -19,6 +19,39 @@
 
 pkg_name = "al-agent"
 
+### Set Windows Attributes ###
+drive = "C:"
+msifile = File.basename("al_agent-LATEST.msi")
+msifiledst = "#{drive}\\#{msifile}"
+
+raise "No Provisioning Key" if provkey == nil
+
+### Check Version ###
+if platform_family?("windows")
+
+    execute "Detected Windows - Installing" do
+    command "echo 'test'"
+    end
+
+    ### Download Windows MSI Installer ###
+    remote_file "#{msifiledst}" do
+        source "https://scc.alertlogic.net/software/al_agent-LATEST.msi"    
+    end
+
+
+    ### Execute AL-Agent MSI Installer ###
+    execute "Installing AL-Agent" do
+        command "msiexec /qn /i #{msifiledst} PROV_NOW=0 /quiet"
+        command "echo 'Installed & Provisioned AL-Agent'"
+    end
+
+    ### Removed Windows AL-Agent Installer ###
+    file "#{msifiledst}" do
+        action :delete
+    end
+
+end
+
 ## SeLinux
 semanage_pkg =
     if platform_family?("debian")
