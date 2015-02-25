@@ -38,9 +38,9 @@ if platform_family?("windows")
     install_log = "#{drive}\\install.log"
 
     #Call variables from node
-    win_controller = node["alertlogic"]["win-agent"]["controller_host"]
-    win_inst_type = node["alertlogic"]["win-agent"]["inst_type"]
-    win_prov_key = node["alertlogic"]["win-agent"]["provision_key"]
+    win_controller = node["alertlogic"]["agent"]["controller_host"]
+    win_inst_type = node["alertlogic"]["agent"]["inst_type"]
+    win_prov_key = node["alertlogic"]["agent"]["provision_key"]
 
     ### Check if Mode and Provisioning Keys are set ###
     raise "Host | Role Mode not set" if win_inst_type == nil

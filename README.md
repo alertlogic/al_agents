@@ -17,7 +17,7 @@ environment.
 
 ## Requirements
 
-* Os: Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
+* Os: Windows Most Platforms, Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
 * Arch: x86_64, i386.
 * System logging: rsyslog, syslog-ng.
 
@@ -28,6 +28,8 @@ environment.
 All the attributes are accessible under `node['alertlogic']['agent']`
 section.
 
+Pkg_vsn[deb|rpm] or firewall not required for Windows Installation
+
 | Key                   | Description          | Default                               |
 | --------------------- | -------------------- | ------------------------------------- |
 | `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
@@ -37,6 +39,7 @@ section.
 | `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
 | `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
 | `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
+
 
 
 Example:
