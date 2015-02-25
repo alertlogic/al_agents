@@ -17,10 +17,10 @@ environment.
 
 ## Requirements
 
-* Os: Windows Most Platforms, Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
+* Windows OS Support: Windows 7, 8, Vista, Server 2003, Server 2008, Server 2012
+* Linux OS Support: Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
 * Arch: x86_64, i386.
 * System logging: rsyslog, syslog-ng.
-
 
 ## Recipes
 
