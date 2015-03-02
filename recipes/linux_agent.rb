@@ -93,23 +93,25 @@ prov_key = node["alertlogic"]["agent"]["provider_key"]
 #configure agent
 bash "#{pkg_name} configure" do
     user "root"
-    if controller_host = nil
+    if controller_host == nil
         code "/etc/init.d/#{pkg_name} configure"
         not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
     else
         code "/etc/init.d/#{pkg_name} configure --host #{controller_host}"
         not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
+    end
 end
 
 #provision agent
 bash "#{pkg_name} provision" do
     user "root"
-    if inst_type = nil
-    code "/etc/init.d/#{pkg_name} provision --key #{prov_key}"
-    not_if "test -f /var/alertlogic/etc/host_key.pem"
+    if inst_type == nil
+        code "/etc/init.d/#{pkg_name} provision --key #{prov_key}"
+        not_if "test -f /var/alertlogic/etc/host_key.pem"
     else
-    code "/etc/init.d/#{pkg_name} provision --key #{prov_key} --inst-type #{inst_type}"
-    not_if "test -f /var/alertlogic/etc/host_key.pem"
+        code "/etc/init.d/#{pkg_name} provision --key #{prov_key} --inst-type #{inst_type}"
+        not_if "test -f /var/alertlogic/etc/host_key.pem"
+    end
 end
 
 #start agent
