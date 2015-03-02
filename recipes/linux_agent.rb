@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: al_agents
-# Recipe:: agent
+# Recipe:: linux_agent
 #
 # Copyright (c) 2014, Alert Logic.
 #
@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-pkg_name = "al-agent"
 
 ## SeLinux
 semanage_pkg =
@@ -65,14 +63,58 @@ if firewall_rules.any?
     end
 end
 
-## Install, configure, provision
-al_agents_pkg pkg_name do
-    vsn             node["alertlogic"]["agent"]["pkg_vsn"]
-    base_url        node["alertlogic"]["agent"]["pkg_base_url"]
-    controller_host node["alertlogic"]["agent"]["controller_host"]
-    inst_type       node["alertlogic"]["agent"]["inst_type"]
-    provision_key   node["alertlogic"]["agent"]["provision_key"]
-    action          :install
+#build remote_file source URL
+pkg_base_url = node["alertlogic"]["agent"]["pkg_base_url"]
+pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]["#{node[:platform_family]}"]
+pkg_ext = node["alertlogic"]["agent"]["pkg_ext"]
+pkg_name = "al-agent"
+source = "#{pkg_base_url}/#{pkg_name}-#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
+
+#define where the package will be located on local file system
+alertlogic_package = "#{Chef::Config[:file_cache_path]}/#{pkg_name}-#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
+
+#download package
+remote_file alertlogic_package do
+  source source
+end
+
+#install package
+package alertlogic_package do
+  only_if { ::File.exists?("#{alertlogic_package}") }  
+end
+
+
+
+#define options for agent configuration
+controller_host = node["alertlogic"]["agent"]["controller_host"]
+inst_type = node["alertlogic"]["agent"]["inst_type"]
+prov_key = node["alertlogic"]["agent"]["provider_key"]
+
+#configure agent
+bash "#{pkg_name} configure" do
+    user "root"
+    if controller_host = nil
+        code "/etc/init.d/#{pkg_name} configure"
+        not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
+    else
+        code "/etc/init.d/#{pkg_name} configure --host #{controller_host}"
+        not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
+end
+
+#provision agent
+bash "#{pkg_name} provision" do
+    user "root"
+    if inst_type = nil
+    code "/etc/init.d/#{pkg_name} provision --key #{prov_key}"
+    not_if "test -f /var/alertlogic/etc/host_key.pem"
+    else
+    code "/etc/init.d/#{pkg_name} provision --key #{prov_key} --inst-type #{inst_type}"
+    not_if "test -f /var/alertlogic/etc/host_key.pem"
+end
+
+#start agent
+service pkg_name do
+    action :start
 end
 
 bash "update /etc/rsyslog.conf and restart rsyslog" do

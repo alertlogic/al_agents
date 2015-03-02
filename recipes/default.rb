@@ -17,4 +17,16 @@
 # limitations under the License.
 #
 
-include_recipe "al_agents::agent"
+#include platform appropriate recipe
+case node[:platform_family]
+when "debian"
+  node.default["alertlogic"]["agent"]["pkg_ext"] = ".deb"
+  include_recipe "al_agents::linux_agent"
+when "rhel"
+  node.default["alertlogic"]["agent"]["pkg_ext"] = ".rpm"
+  include_recipe "al_agents::linux_agent"
+when "windows"
+  node.default["alertlogic"]["agent"]["pkg_ext"] = ".msi"
+  include_recpe "al_agents::windows_agent"
+else Chef::Application.fatal.!("This cookbook does not support #{node[:platform]}.")
+end

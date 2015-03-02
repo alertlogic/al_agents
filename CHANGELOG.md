@@ -1,6 +1,11 @@
 al_agents CHANGELOG
 ==========================
 
+0.3.0
+-----
+- [Harvey Bendana] - refactor to leverage native Chef package resource. 
+  add support for Windows agent installation. Removal of deprocated code.
+
 0.2.0
 -----
 - [Evgeny Bob] - various minor fixes. Addition of Universal Agent recipe.
