@@ -36,7 +36,7 @@ end
 sensor_host = node["alertlogic"]["agent"]["controller_host"]
 sensor_port = node["alertlogic"]["agent"]["sensor_port"]
 use_proxy = node["alertlogic"]["agent"]["use_proxy"]
-prov_key = node["alertlogic"]["agent"]["provider_key"]
+prov_key = node["alertlogic"]["agent"]["provision_key"]
 options = "SENSOR_HOST=#{sensor_host} SENSOR_PORT=#{sensor_port} USE_PROXY=#{use_proxy} PROV_KEY=#{prov_key}"
 
 #install package
