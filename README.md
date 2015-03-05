@@ -56,63 +56,6 @@ Example:
 }
 ```
 
-### al_agents::log_agent (DEPRECATED)
-All the attributes are accessible under `node['alertlogic']['log-agent']`
-section.
-
-| Key                   | Description          | Default                               |
-| --------------------- | -------------------- | ------------------------------------- |
-| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
-| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST_"`       |
-| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
-| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
-| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
-| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
-
-
-Example:
-```json
-{
-  "alertlogic": {
-      "log-agent": {
-          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
-      }
-  },
-  "run_list": [
-    "recipe[al_agents::log_agent]"
-  ]
-}
-```
-
-### al_agents::threat_host (DEPRECATED)
-All the attributes are accessible under `node['alertlogic']['threat-host']`
-section.
-
-| Key                   | Description          | Default                               |
-| --------------------- | -------------------- | ------------------------------------- |
-| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
-| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST."`       |
-| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"_LATEST."`     |
-| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
-| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
-| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
-
-
-Example:
-```json
-{
-  "alertlogic": {
-      "threat-host": {
-          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
-      }
-  },
-  "run_list": [
-    "recipe[al_agents::threat_host]"
-  ]
-}
-```
 
 ## CloudInit
 [CloudInit](http://cloudinit.readthedocs.org/) is the way to install something
