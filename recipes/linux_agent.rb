@@ -43,7 +43,7 @@ end
 ## TODO: not persistent
 
 firewall_rules = node["alertlogic"]["agent"]["firewall"]
-if firewall_rules.any?
+if !firewall_rules.nil?
     firewall_cmd =
         firewall_rules.map { |r|
             (fw_net, fw_port) = r.split(":")
@@ -62,6 +62,7 @@ if firewall_rules.any?
         not_if  firewall_check_cmd
     end
 end
+
 
 #build remote_file source URL
 pkg_base_url = node["alertlogic"]["agent"]["pkg_base_url"]
