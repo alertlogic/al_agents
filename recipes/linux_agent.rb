@@ -89,7 +89,7 @@ end
 #define options for agent configuration
 controller_host = node["alertlogic"]["agent"]["controller_host"]
 inst_type = node["alertlogic"]["agent"]["inst_type"]
-prov_key = node["alertlogic"]["agent"]["provider_key"]
+prov_key = node["alertlogic"]["agent"]["provision_key"]
 
 #configure agent
 bash "#{pkg_name} configure" do
