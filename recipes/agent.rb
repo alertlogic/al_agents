@@ -39,11 +39,9 @@ if platform_family?("windows")
 
     #Call variables from node
     win_controller = node["alertlogic"]["agent"]["controller_host"]
-    win_inst_type = node["alertlogic"]["agent"]["inst_type"]
     win_prov_key = node["alertlogic"]["agent"]["provision_key"]
 
-    ### Check if Mode and Provisioning Keys are set ###
-    raise "Host | Role Mode not set" if win_inst_type == nil
+    ### Check if Provisioning Key is set ###
     raise "No Provisioning Key" if win_prov_key == nil
 
     ### Download Windows MSI Installer ###
@@ -53,7 +51,7 @@ if platform_family?("windows")
 
     ### Install alertlogic windows agent passing variables. ###
     execute "Installing" do
-        command "msiexec -i #{msifiledst} prov_only=#{win_inst_type} prov_key=#{win_prov_key} sensor_host=#{win_controller} /quiet /log #{install_log}"
+        command "msiexec -i #{msifiledst} PROV_NOW=1 prov_key=#{win_prov_key} sensor_host=#{win_controller} /quiet /log #{install_log}"
     end
 
     ### Removed Windows AL-Agent Installer ###
