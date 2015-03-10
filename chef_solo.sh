@@ -39,7 +39,7 @@ cat << EOF > ${CHEF_CFG_DIR}/node.json
             "provision_key": "${PROVISION_KEY}"
         }
     },
-    "run_list": "recipe[al_agents::agent]"
+    "run_list": "recipe[al_agents::default]"
 }
 EOF
 chmod 600 ${CHEF_CFG_DIR}/node.json
