@@ -11,7 +11,7 @@ write_files:
                 "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
             }
         },
-        "run_list": "recipe[al_agents::agent]"
+        "run_list": "recipe[al_agents::default]"
     }
    path: /etc/chef/node.json
    permissions: '0600'
