@@ -75,7 +75,7 @@ source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_e
 local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}-#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
 
 #download package
-remote_file alertlogic_package do
+remote_file local_source do
   source source
 end
 
