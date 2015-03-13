@@ -72,7 +72,7 @@ pkg_name = "al-agent"
 source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
 
 #define where the package will be located on local file system
-alertlogic_package = "#{Chef::Config[:file_cache_path]}/#{pkg_name}-#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
+local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}-#{pkg_vsn}#{node[:kernel][:machine]}#{pkg_ext}"
 
 #download package
 remote_file alertlogic_package do
@@ -80,8 +80,9 @@ remote_file alertlogic_package do
 end
 
 #install package
-package alertlogic_package do
-  only_if { ::File.exists?("#{alertlogic_package}") }  
+package pkg_name do
+  source local_source
+  only_if { ::File.exists?("#{local_source}") }  
 end
 
 
