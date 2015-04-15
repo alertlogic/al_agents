@@ -21,6 +21,7 @@
 case node[:platform_family]
 when "debian"
   node.default["alertlogic"]["agent"]["pkg_ext"] = "deb"
+  node.default["alertlogic"]["agent"]["pkg_provider"] = Chef::Provider::Package::Dpkg
   if node[:kernel][:machine] == "x86_64"
     node.default["alertlogic"]["agent"]["pkg_arch"] = "amd64"
   elsif ["i386", "i568", "i686"].include? node[:kernel][:machine]
@@ -30,6 +31,7 @@ when "debian"
   include_recipe "al_agents::linux_agent"
 when "rhel"
   node.default["alertlogic"]["agent"]["pkg_ext"] = "rpm"
+  node.default["alertlogic"]["agent"]["pkg_provider"] = Chef::Provider::Package::Rpm
   if node[:kernel][:machine] == "x86_64"
     node.default["alertlogic"]["agent"]["pkg_ext"] = "x86_64"
   elsif ["i386", "i568", "i686"].include? node[:kernel][:machine]

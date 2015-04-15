@@ -80,8 +80,12 @@ remote_file local_source do
   source source
 end
 
+# platform specific package provider defined in default.rb
+pkg_provider = node["alertlogic"]["agent"]["pkg_provider"]
+
 #install package
 package pkg_name do
+  provider pkg_provider
   source local_source
   only_if { ::File.exists?("#{local_source}") }  
 end
