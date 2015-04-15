@@ -66,13 +66,14 @@ end
 
 #build remote_file source URL
 pkg_base_url = node["alertlogic"]["agent"]["pkg_base_url"]
-pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]
 pkg_ext = node["alertlogic"]["agent"]["pkg_ext"]
+pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]["#{pkg_ext}"]
+pkg_arch = node["alertlogic"]["agent"]["pkg_arch"]
 pkg_name = "al-agent"
-source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}#{pkg_ext}"
+source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}#{pkg_arch}.#{pkg_ext}"
 
 #define where the package will be located on local file system
-local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}-#{pkg_vsn}#{pkg_ext}"
+local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}#{pkg_vsn}#{pkg_arch}.#{pkg_ext}"
 
 #download package
 remote_file local_source do

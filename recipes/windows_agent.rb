@@ -19,8 +19,8 @@
 
 #build remote_file source URL
 pkg_base_url = node["alertlogic"]["agent"]["pkg_base_url"]
-pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]
 pkg_ext = node["alertlogic"]["agent"]["pkg_ext"]
+pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]["#{pkg_ext}"]
 pkg_name = "al_agent"
 source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}.#{pkg_ext}"
 
