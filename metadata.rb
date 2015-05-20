@@ -16,9 +16,9 @@
 # limitations under the License.
 #
 
-name             'al_agents'
-maintainer       'Alert Logic'
+name 'al_agents'
+maintainer 'Alert Logic'
 maintainer_email 'support@alertlogic.com'
-license          'Apache 2.0'
-description      'Installs and configures alert logic universal agent'
-version          '0.3.0'
+license 'Apache 2.0'
+description 'Installs and configures alert logic universal agent'
+version '0.3.0'

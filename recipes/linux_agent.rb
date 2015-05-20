@@ -19,127 +19,124 @@
 
 ## SeLinux
 semanage_pkg =
-    if platform_family?("debian")
-        "policycoreutils"
-    elsif platform_family?("rhel")
-        "policycoreutils-python"
+    if platform_family?('debian')
+      'policycoreutils'
+    elsif platform_family?('rhel')
+      'policycoreutils-python'
     else
-        raise "Unsupported platform"
+      fail 'Unsupported platform'
     end
 
 package semanage_pkg do
-    action :install
+  action :install
 end
 
-bash "update selinux" do
-    code 'semanage port -a -t syslogd_port_t -p tcp 1514'
-    only_if 'sestatus | grep -q "SELinux status:\s*enabled" \
-             && sestatus | grep -q "Current mode:\s*enforcing" \
-             && ( semanage port -l | grep "syslogd_port_t\s*tcp.*\<1514\>" \
-                  && exit 1 || exit 0 ) #swap status code'
+bash 'update selinux' do
+  code 'semanage port -a -t syslogd_port_t -p tcp 1514'
+  only_if 'sestatus | grep -q "SELinux status:\s*enabled" \
+           && sestatus | grep -q "Current mode:\s*enforcing" \
+           && ( semanage port -l | grep "syslogd_port_t\s*tcp.*\<1514\>" \
+                && exit 1 || exit 0 ) #swap status code'
 end
 
 ## Firewall
 ## TODO: not persistent
 
-firewall_rules = node["alertlogic"]["agent"]["firewall"]
-if !firewall_rules.nil?
-    firewall_cmd =
-        firewall_rules.map { |r|
-            (fw_net, fw_port) = r.split(":")
-                "iptables -A OUTPUT -m tcp -p tcp -d #{fw_net}" \
-                          " --dport #{fw_port} -j ACCEPT"
-            }.join("; ")
+firewall_rules = node['alertlogic']['agent']['firewall']
+unless firewall_rules.nil?
+  firewall_cmd =
+      firewall_rules.map do |r|
+        (fw_net, fw_port) = r.split(':')
+        "iptables -A OUTPUT -m tcp -p tcp -d #{fw_net}" \
+                  " --dport #{fw_port} -j ACCEPT"
+      end.join('; ')
 
-    firewall_check_cmd =
-        firewall_rules.map { |r|
-            (fw_net, fw_port) = r.split(":")
-            "iptables -L | grep -q #{fw_net}"
-        }.join(" || ")
+  firewall_check_cmd =
+      firewall_rules.map do |r|
+        (fw_net, _fw_port) = r.split(':')
+        "iptables -L | grep -q #{fw_net}"
+      end.join(' || ')
 
-    bash "update iptables OUTPUT chain" do
-        code    firewall_cmd
-        not_if  firewall_check_cmd
-    end
+  bash 'update iptables OUTPUT chain' do
+    code firewall_cmd
+    not_if firewall_check_cmd
+  end
 end
 
-
-#build remote_file source URL
-pkg_base_url = node["alertlogic"]["agent"]["pkg_base_url"]
-pkg_ext = node["alertlogic"]["agent"]["pkg_ext"]
-pkg_vsn = node["alertlogic"]["agent"]["pkg_vsn"]["#{pkg_ext}"]
-pkg_arch = node["alertlogic"]["agent"]["pkg_arch"]
-pkg_name = "al-agent"
+# build remote_file source URL
+pkg_base_url = node['alertlogic']['agent']['pkg_base_url']
+pkg_ext = node['alertlogic']['agent']['pkg_ext']
+pkg_vsn = node['alertlogic']['agent']['pkg_vsn'][pkg_ext]
+pkg_arch = node['alertlogic']['agent']['pkg_arch']
+pkg_name = 'al-agent'
 source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}#{pkg_arch}.#{pkg_ext}"
 
-#define where the package will be located on local file system
-local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}#{pkg_vsn}#{pkg_arch}.#{pkg_ext}"
+# define where the package will be located on local file system
+local_source = "#{Chef::Config['file_cache_path']}/#{pkg_name}#{pkg_vsn}#{pkg_arch}.#{pkg_ext}"
 
-#download package
+# download package
 remote_file local_source do
   source source
 end
 
 # platform specific package provider defined in default.rb
-pkg_provider = node["alertlogic"]["agent"]["pkg_provider"]
+pkg_provider = node['alertlogic']['agent']['pkg_provider']
 
-#install package
+# install package
 package pkg_name do
   provider pkg_provider
   source local_source
-  only_if { ::File.exists?("#{local_source}") }  
+  only_if { ::File.exist?(local_source) }
 end
 
+# define options for agent configuration
+controller_host = node['alertlogic']['agent']['controller_host']
+inst_type = node['alertlogic']['agent']['inst_type']
+prov_key = node['alertlogic']['agent']['provision_key']
 
-
-#define options for agent configuration
-controller_host = node["alertlogic"]["agent"]["controller_host"]
-inst_type = node["alertlogic"]["agent"]["inst_type"]
-prov_key = node["alertlogic"]["agent"]["provision_key"]
-
-#configure agent
+# configure agent
 bash "#{pkg_name} configure" do
-    user "root"
-    if controller_host == nil
-        code "/etc/init.d/#{pkg_name} configure"
-        not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
-    else
-        code "/etc/init.d/#{pkg_name} configure --host #{controller_host}"
-        not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(%r{^al-}, "")}/etc/controller_host"
-    end
+  user 'root'
+  if controller_host.nil?
+    code "/etc/init.d/#{pkg_name} configure"
+    not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(/^al-/, '')}/etc/controller_host"
+  else
+    code "/etc/init.d/#{pkg_name} configure --host #{controller_host}"
+    not_if "test -f /var/alertlogic/lib/#{pkg_name.sub(/^al-/, '')}/etc/controller_host"
+  end
 end
 
-#provision agent
+# provision agent
 bash "#{pkg_name} provision" do
-    user "root"
-    if inst_type == nil
-        code "/etc/init.d/#{pkg_name} provision --key #{prov_key}"
-        not_if "test -f /var/alertlogic/etc/host_key.pem"
-    else
-        code "/etc/init.d/#{pkg_name} provision --key #{prov_key} --inst-type #{inst_type}"
-        not_if "test -f /var/alertlogic/etc/host_key.pem"
-    end
+  user 'root'
+  if inst_type.nil?
+    code "/etc/init.d/#{pkg_name} provision --key #{prov_key}"
+    not_if 'test -f /var/alertlogic/etc/host_key.pem'
+  else
+    code "/etc/init.d/#{pkg_name} provision --key #{prov_key} --inst-type #{inst_type}"
+    not_if 'test -f /var/alertlogic/etc/host_key.pem'
+  end
 end
 
-#start agent
+# start agent
 service pkg_name do
-    action :start
+  action :start
 end
 
-bash "update /etc/rsyslog.conf and restart rsyslog" do
-    user "root"
-        code <<-EOH
+bash 'update /etc/rsyslog.conf and restart rsyslog' do
+  user 'root'
+  code <<-EOH
             echo "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" >> /etc/rsyslog.conf
             # return 0 in case of restart
             ps -e | grep -q rsyslog && service rsyslog restart || echo "rsyslog not running"
         EOH
-    only_if do ::File.exist?('/etc/rsyslog.conf') end
-    not_if 'grep -q "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" /etc/rsyslog.conf'
+  only_if { ::File.exist?('/etc/rsyslog.conf') }
+  not_if 'grep -q "*.* @@127.0.0.1:1514;RSYSLOG_FileFormat" /etc/rsyslog.conf'
 end
 
-bash "update /etc/syslog-ng/syslog-ng.conf and restart syslog-ng" do
-    user "root"
-        code <<-EOH
+bash 'update /etc/syslog-ng/syslog-ng.conf and restart syslog-ng' do
+  user 'root'
+  code <<-EOH
             CONF=/etc/syslog-ng/syslog-ng.conf
 
             # detect default source name
@@ -149,6 +146,6 @@ bash "update /etc/syslog-ng/syslog-ng.conf and restart syslog-ng" do
             echo 'log { source('$DEFSRC'); destination(d_alertlogic); };' >> $CONF
             ps -e | grep -q syslog-ng && service syslog-ng restart || echo "syslog-ng not running"
         EOH
-    only_if do ::File.exist?('/etc/syslog-ng/syslog-ng.conf') end
-    not_if 'grep -q "alertlogic" /etc/syslog-ng/syslog-ng.conf'
+  only_if { ::File.exist?('/etc/syslog-ng/syslog-ng.conf') }
+  not_if 'grep -q "alertlogic" /etc/syslog-ng/syslog-ng.conf'
 end
