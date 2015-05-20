@@ -17,30 +17,34 @@
 # limitations under the License.
 #
 
-#include platform appropriate recipe
-case node[:platform_family]
-when "debian"
-  node.default["alertlogic"]["agent"]["pkg_ext"] = "deb"
-  node.default["alertlogic"]["agent"]["pkg_provider"] = Chef::Provider::Package::Dpkg
-  if node[:kernel][:machine] == "x86_64"
-    node.default["alertlogic"]["agent"]["pkg_arch"] = "amd64"
-  elsif ["i386", "i568", "i686"].include? node[:kernel][:machine]
-    node.default["alertlogic"]["agent"]["pkg_arch"] = "i386"
-  else Chef::Application.Fatal.!("This cookbook does not support #{node[:platform_family]} machine architecture #{node[:kernel][:machine]}")
+# include platform appropriate recipe
+case node['platform_family']
+when 'debian'
+  node.default['alertlogic']['agent']['pkg_ext'] = 'deb'
+  node.default['alertlogic']['agent']['pkg_provider'] =
+    Chef::Provider::Package::Dpkg
+  if node['kernel']['machine'] == 'x86_64'
+    node.default['alertlogic']['agent']['pkg_arch'] = 'amd64'
+  elsif %w(i386 i568 i686).include? node['kernel']['machine']
+    node.default['alertlogic']['agent']['pkg_arch'] = 'i386'
+  else Chef::Application.Fatal.!(
+    "This cookbook does not support #{node['platform_family']} machine architecture #{node['kernel']['machine']}")
   end
-  include_recipe "al_agents::linux_agent"
-when "rhel"
-  node.default["alertlogic"]["agent"]["pkg_ext"] = "rpm"
-  node.default["alertlogic"]["agent"]["pkg_provider"] = Chef::Provider::Package::Rpm
-  if node[:kernel][:machine] == "x86_64"
-    node.default["alertlogic"]["agent"]["pkg_arch"] = "x86_64"
-  elsif ["i386", "i568", "i686"].include? node[:kernel][:machine]
-    node.default["alertlogic"]["agent"]["pkg_arch"] = "i386"
-  else Chef::Application.Fatal.!("This cookbook does not support #{node[:platform_family]} machine architecture #{node[:kernel][:machine]}")
+  include_recipe 'al_agents::linux_agent'
+when 'rhel'
+  node.default['alertlogic']['agent']['pkg_ext'] = 'rpm'
+  node.default['alertlogic']['agent']['pkg_provider'] = Chef::Provider::Package::Rpm
+  if node['kernel']['machine'] == 'x86_64'
+    node.default['alertlogic']['agent']['pkg_arch'] = 'x86_64'
+  elsif %w(i386 i568 i686).include? node['kernel']['machine']
+    node.default['alertlogic']['agent']['pkg_arch'] = 'i386'
+  else Chef::Application.Fatal.!(
+    "This cookbook does not support #{node['platform_family']} machine architecture #{node['kernel']['machine']}")
   end
-  include_recipe "al_agents::linux_agent"
-when "windows"
-  node.default["alertlogic"]["agent"]["pkg_ext"] = "msi"
-  include_recipe "al_agents::windows_agent"
-else Chef::Application.fatal.!("This cookbook does not support #{node[:platform]}.")
+  include_recipe 'al_agents::linux_agent'
+when 'windows'
+  node.default['alertlogic']['agent']['pkg_ext'] = 'msi'
+  include_recipe 'al_agents::windows_agent'
+else Chef::Application.fatal.!(
+  "This cookbook does not support #{node['platform']}.")
 end
