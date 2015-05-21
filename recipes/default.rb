@@ -41,6 +41,7 @@ when "rhel"
   include_recipe "al_agents::linux_agent"
 when "windows"
   node.default["alertlogic"]["agent"]["pkg_ext"] = "msi"
+  node.default["alertlogic"]["agent"]["pkg_provider"] = Chef::Provider::Package::Windows
   include_recipe "al_agents::windows_agent"
 else Chef::Application.fatal.!("This cookbook does not support #{node[:platform]}.")
 end
