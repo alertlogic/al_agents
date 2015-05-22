@@ -25,10 +25,10 @@ pkg_name = "al_agent"
 source = "#{pkg_base_url}/#{pkg_name}#{pkg_vsn}.#{pkg_ext}"
 
 #define where the package will be located on local file system
-alertlogic_package = "#{Chef::Config[:file_cache_path]}/#{pkg_name}#{pkg_vsn}.#{pkg_ext}"
+local_source = "#{Chef::Config[:file_cache_path]}/#{pkg_name}#{pkg_vsn}.#{pkg_ext}"
 
 #download package
-remote_file alertlogic_package do
+remote_file local_source do
   source source
 end
 
@@ -39,8 +39,12 @@ use_proxy = node["alertlogic"]["agent"]["use_proxy"]
 prov_key = node["alertlogic"]["agent"]["provision_key"]
 options = "SENSOR_HOST=#{sensor_host} SENSOR_PORT=#{sensor_port} USE_PROXY=#{use_proxy} PROV_KEY=#{prov_key}"
 
+pkg_provider = node["alertlogic"]["agent"]["pkg_provider"]
+
 #install package
-windows_package alertlogic_package do
+package pkg_name do
+  provider pkg_provider
+  source local_source
   options options
-  only_if { ::File.exists?("#{alertlogic_package}") }  
+  only_if { ::File.exists?("#{local_source}") }
 end
