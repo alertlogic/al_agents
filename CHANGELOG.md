@@ -1,6 +1,12 @@
 al_agents CHANGELOG
 ==========================
 
+0.4.0
+-----
+- Renamed example folder
+- Updated windows recipe to be like linux cookbook
+- Added style and lint tools
+
 0.3.0
 -----
 - [Harvey Bendana] - refactor to leverage native Chef package resource. 
