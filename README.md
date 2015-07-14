@@ -7,10 +7,12 @@ Requirements
 The following platforms are tested directly under test kitchen.
 
 - ubuntu-12.04
+- ubuntu-14.04
 - centos-6.4
 - centos-7.0
 - debian-7.8
 - fedora-19
+- windows-2012r2
 
 #### Cookbook Dependencies
 - rsyslog
@@ -41,7 +43,7 @@ On linux, if you are using rsyslog and desire to skip an attempt at detection, y
 On linux, if you are using syslog-ng and desire to skip an attempt at detection, you may run the al_agent::syslog_ng recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
 
 ### al_agent::selinux
-On linux, if you are using selinux and desire to skip an attempt at detection, you may run the al_agent::selinux recipe independently. This recipe will add a selinux policy to allow for logging to port 1514.
+On linux, if you are using selinux and desire to skip an attempt at detection, you may run the al_agent::selinux recipe independently. This recipe will add a selinux policy to allow for logging to port 1514.  This recipe does not enable nor disable selinux policy enforcement.
 
 ### al_agent::install
 On linux, should you desire to install the package, configure and provision the machine you may run this recipe independently.
