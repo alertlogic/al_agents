@@ -1,0 +1,29 @@
+---
+driver_config:
+  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] %>
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+- name: centos-6.5
+
+- name: redhat-7.0
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-a8d369c0
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[selinux::disabled]
+
+- name: suse-11.3
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-e8084981
+    username: root
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>

@@ -1,2 +1,6 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+
 Metrics/LineLength:
   Max: 120

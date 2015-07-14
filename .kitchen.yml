@@ -1,0 +1,36 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+  - name: centos-6.4
+  - name: centos-7.0
+  - name: debian-7.8
+  - name: fedora-19
+  - name: syslogng-ubuntu-1204
+  - name: rsyslog-selinux-centos-65
+
+suites:
+  - name: default
+    run_list:
+      - recipe[al_agent::default]
+    attributes:
+
+  # - name: blank
+  #   run_list:
+  #     - recipe[al_agent::blank]
+  #   attributes:
+
+  # - name: configure
+  #   run_list:
+  #     - recipe[al_agent::configure]
+  #   attributes:
+
+  # - name: provision
+  #   run_list:
+  #     - recipe[al_agent::provision]
+  #   attributes:
