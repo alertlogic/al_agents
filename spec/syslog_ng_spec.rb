@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'al_agent::syslog_ng' do
+describe 'al_agents::syslog_ng' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new(
       platform: 'ubuntu',

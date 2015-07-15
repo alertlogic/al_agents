@@ -1,10 +1,10 @@
 cache_dir = Chef::Config[:file_cache_path]
-basename = agent_file(node['al_agent']['package']['url'])
+basename = agent_file(node['al_agents']['package']['url'])
 cached_package = ::File.join(cache_dir, basename)
 
 remote_file basename do
   path cached_package
-  source node['al_agent']['package']['url']
+  source node['al_agents']['package']['url']
   action :create_if_missing
 end
 
@@ -17,4 +17,4 @@ package basename do
   not_if windows_install_guard
 end
 
-include_recipe 'al_agent::start' unless for_imaging
+include_recipe 'al_agents::start' unless for_imaging

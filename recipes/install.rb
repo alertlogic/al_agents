@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: al_agent
+# Cookbook Name:: al_agents
 # Recipe:: install
 #
 # Copyright 2015, AlertLogic
@@ -8,12 +8,12 @@
 #
 
 cache_dir = Chef::Config[:file_cache_path]
-basename = agent_file(node['al_agent']['package']['url'])
+basename = agent_file(node['al_agents']['package']['url'])
 cached_package = ::File.join(cache_dir, basename)
 
 remote_file basename do
   path cached_package
-  source node['al_agent']['package']['url']
+  source node['al_agents']['package']['url']
   action :create_if_missing
 end
 
@@ -28,7 +28,6 @@ execute "configure #{basename}" do
   user 'root'
   cwd '/etc/init.d'
   command "./al-agent configure #{configure_options}"
-  # not_if { ::File.exist?('/var/alertlogic/lib/agent/etc/controller_host') }
 end
 
 execute "provision #{basename}" do

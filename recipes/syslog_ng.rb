@@ -15,7 +15,7 @@ template '/etc/syslog-ng/conf.d/alertlogic.conf' do
   owner 'root'
   group 'root'
   mode '0644'
-  variables(source_log: node['al_agent']['syslog_ng']['source_log'])
+  variables(source_log: node['al_agents']['syslog_ng']['source_log'])
   notifies :restart, 'service[syslog-ng]'
   not_if { ::File.exist?('/etc/syslog-ng/conf.d/alertlogic.conf') }
 end

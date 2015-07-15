@@ -2,7 +2,7 @@
 Chef::Recipe.send(:include, Chef::Util::Selinux)
 
 def al_agent
-  node['al_agent']['package']['name']
+  node['al_agents']['package']['name']
 end
 
 def agent_file(uri)
@@ -12,25 +12,25 @@ def agent_file(uri)
 end
 
 def service_name
-  node['al_agent']['agent']['service_name']
+  node['al_agents']['agent']['service_name']
 end
 
 def windows_install_guard
-  node['al_agent']['windows_install_guard']
+  node['al_agents']['windows_install_guard']
 end
 
 def registration_key
-  node['al_agent']['agent']['registration_key']
+  node['al_agents']['agent']['registration_key']
 end
 
 # for_autoscaling: role ~> autoscaling = true, host ~> autoscaling = false
 def for_autoscaling
-  node['al_agent']['agent']['for_autoscaling']
+  node['al_agents']['agent']['for_autoscaling']
 end
 
 # for_imaging: configure ~> run just the configure commands, provision ~> run the provision command
 def for_imaging
-  node['al_agent']['agent']['for_imaging']
+  node['al_agents']['agent']['for_imaging']
 end
 
 def rsyslog_detected?

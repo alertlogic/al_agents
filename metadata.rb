@@ -1,4 +1,4 @@
-name 'al_agent'
+name 'al_agents'
 maintainer 'John Ramos DualSpark'
 maintainer_email 'john.ramos@dualspark.com'
 source_url 'https://github.com/alertlogic/al_agents'

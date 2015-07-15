@@ -6,7 +6,7 @@ class Chef
       attr_accessor :url
 
       def initialize(node)
-        @url = node['al_agent']['agent']['egress_url']
+        @url = node['al_agents']['agent']['egress_url']
       end
 
       def host

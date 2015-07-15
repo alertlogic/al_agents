@@ -22,8 +22,8 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[al_agent::default]
+      - recipe[al_agents::default]
     # attributes:
-    #   al_agent:
+    #   al_agents:
     #     agent:
     #       registration_key: 'your_key_here'

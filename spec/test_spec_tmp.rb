@@ -1,7 +1,7 @@
 
 require 'spec_helper'
 
-describe 'al_agent::default' do
+describe 'al_agents::default' do
   context 'with ubuntu' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(

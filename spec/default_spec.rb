@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'al_agent::default' do
+describe 'al_agents::default' do
   context 'on the linux platform family' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
@@ -10,7 +10,7 @@ describe 'al_agent::default' do
     end
 
     it 'includes the linux recipe' do
-      expect(chef_run).to include_recipe('al_agent::_linux')
+      expect(chef_run).to include_recipe('al_agents::_linux')
     end
   end
 
@@ -28,7 +28,7 @@ describe 'al_agent::default' do
     end
 
     it 'includes the windows recipe' do
-      expect(chef_run).to include_recipe('al_agent::_windows')
+      expect(chef_run).to include_recipe('al_agents::_windows')
     end
   end
 end

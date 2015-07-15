@@ -22,7 +22,7 @@ class Chef
           let(:egress_host) { 'vaporator.alertlogic.com' }
           let(:egress_port) { '443' }
           let(:egress_url) { "#{egress_scheme}#{egress_host}:#{egress_port}" }
-          let(:node) { Hash['al_agent' => { 'agent' => { 'egress_url' => egress_url } }] }
+          let(:node) { Hash['al_agents' => { 'agent' => { 'egress_url' => egress_url } }] }
           let(:egress) { Egress.new(node) }
           it 'returns vaporator.alertlogic.com' do
             expect(egress.host).to eql(egress_host)
@@ -35,7 +35,7 @@ class Chef
           let(:egress_host) { 'noscheme.alertlogics.com' }
           let(:egress_port) { '443' }
           let(:egress_url) { "#{egress_host}:#{egress_port}" }
-          let(:node) { Hash['al_agent' => { 'agent' => { 'egress_url' => egress_url } }] }
+          let(:node) { Hash['al_agents' => { 'agent' => { 'egress_url' => egress_url } }] }
           let(:egress) { Egress.new(node) }
           it 'returns vaporator.alertlogic.com' do
             expect(egress.host).to eql(egress_host)
