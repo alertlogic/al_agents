@@ -22,33 +22,33 @@ The following platforms are tested directly under test kitchen.
 Attributes
 ----------
 
-* `['al_agent']['agent']['registration_key']` - your required registration key. String defaults to `your_registration_key_here`
-* `['al_agent']['agent']['for_autoscaling']` - The for_autoscaling attribute determines if your installation will be configured as a `host` or `role` server.  By default for_autoscaling is set to `false` or in other words as a `host` install.  If autoscaling is set to `true` then the install is configured as a `role` server. Boolean defaults to `false`
-* `['al_agent']['agent']['for_imaging']` - The `for_imaging` attribute determines if the install process will continue or stop prior to provisioning.  If the `for_imaging` attribute is set to `true` then the install process perform an install only and stop before provisioning.  This allows for instance snapshots to be saved and started for later use.  With this attribute set to `false` then the provisioning process is performed during setup.  Boolean defaults to `false`
-* `['al_agent']['agent']['egress_url']` - By default all traffic is sent to https://vaporator.alertlogic.com:443.  This attribute is useful if you have a machine that is responsible for outbound traffic (NAT box).  If you specify your own URL ensure that it is a properly formatted URI.  String defaults to `https://vaporator.alertlogic.com:443`
+* `['al_agents']['agent']['registration_key']` - your required registration key. String defaults to `your_registration_key_here`
+* `['al_agents']['agent']['for_autoscaling']` - The for_autoscaling attribute determines if your installation will be configured as a `host` or `role` server.  By default for_autoscaling is set to `false` or in other words as a `host` install.  If autoscaling is set to `true` then the install is configured as a `role` server. Boolean defaults to `false`
+* `['al_agents']['agent']['for_imaging']` - The `for_imaging` attribute determines if the install process will continue or stop prior to provisioning.  If the `for_imaging` attribute is set to `true` then the install process perform an install only and stop before provisioning.  This allows for instance snapshots to be saved and started for later use.  With this attribute set to `false` then the provisioning process is performed during setup.  Boolean defaults to `false`
+* `['al_agents']['agent']['egress_url']` - By default all traffic is sent to https://vaporator.alertlogic.com:443.  This attribute is useful if you have a machine that is responsible for outbound traffic (NAT box).  If you specify your own URL ensure that it is a properly formatted URI.  String defaults to `https://vaporator.alertlogic.com:443`
 
 Usage
 -----
-### al_agent::default
+### al_agents::default
 The default recipe will attempt to perform an install best suited for your environment.  It will install the package for your system. The default attributes will install the agent in `host` mode (not for image capture).
 
-On linux, the default recipe includes an attempt to detect your logging system and adds a configuration directive for that logging system.  For more information see the al_agent::rsyslog and al_agent::syslog_ng recipes.  This recipe also includes an attempt to detect if selinux is installed on the machine.
+On linux, the default recipe includes an attempt to detect your logging system and adds a configuration directive for that logging system.  For more information see the al_agents::rsyslog and al_agents::syslog_ng recipes.  This recipe also includes an attempt to detect if selinux is installed on the machine.
 
 On both windows and linux the proper package is installed and the agent is started when the cookbook's defaults are used.
 
-### al_agent::rsyslog
+### al_agents::rsyslog
 On linux, if you are using rsyslog and desire to skip an attempt at detection, you may run the al_agent::rsyslog recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
 
-### al_agent::syslog_ng
-On linux, if you are using syslog-ng and desire to skip an attempt at detection, you may run the al_agent::syslog_ng recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
+### al_agents::syslog_ng
+On linux, if you are using syslog-ng and desire to skip an attempt at detection, you may run the al_agents::syslog_ng recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
 
-### al_agent::selinux
-On linux, if you are using selinux and desire to skip an attempt at detection, you may run the al_agent::selinux recipe independently. This recipe will add a selinux policy to allow for logging to port 1514.  This recipe does not enable nor disable selinux policy enforcement.
+### al_agents::selinux
+On linux, if you are using selinux and desire to skip an attempt at detection, you may run the al_agents::selinux recipe independently. This recipe will add a selinux policy to allow for logging to port 1514.  This recipe does not enable nor disable selinux policy enforcement.
 
-### al_agent::install
+### al_agents::install
 On linux, should you desire to install the package, configure and provision the machine you may run this recipe independently.
 
-### al_agent::start
+### al_agents::start
 On linux, this recipe as stated starts the service.
 
 
@@ -60,7 +60,7 @@ Examples
 {
   "name":"my_server",
   "run_list": [
-    "recipe[al_agent]"
+    "recipe[al_agents]"
   ]
 }
 ```
@@ -70,7 +70,7 @@ Examples
 {
   "name":"my_server",
   "run_list": [
-    "recipe[al_agent::rsyslog, al_agent::install]"
+    "recipe[al_agents::rsyslog, al_agents::install]"
   ]
 }
 ```

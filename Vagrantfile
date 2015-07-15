@@ -83,7 +83,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
 
     chef.run_list = [
-      'recipe[al_agent::default]'
+      'recipe[al_agents::default]'
     ]
   end
 end

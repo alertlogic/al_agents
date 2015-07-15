@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: al_agent
+# Cookbook Name:: al_agents
 # Recipe:: selinux
 #
 # Copyright 2015, AlertLogic

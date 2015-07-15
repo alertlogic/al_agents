@@ -17,17 +17,6 @@ describe file('/var/alertlogic/lib/agent/etc/controller_host') do
   it { should be_file }
 end
 
-# http://serverspec.org/resource_types.html#iptables
-# log "**** configure_iptables? ****"
-# #{node['al_agent']['configure_iptable']}
-# describe 'iptable changes' do
-#   describe iptables do
-#     # it { should have_rule('-P INPUT ACCEPT') }
-#     # -A OUTPUT -m tcp -p tcp -d #{destination} --dport #{port} -j ACCEPT
-#     it { should have_rule("-A OUTPUT ACCEPT") }
-#   end
-# end
-#
 # # http://serverspec.org/resource_types.html#selinux
 # describe 'seliux changes' do
 #   describe selinux do

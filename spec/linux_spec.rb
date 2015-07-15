@@ -1,14 +1,7 @@
 
-# before do
-#   Manipulator.stub(:new).and_return(manipulator)
-#   Manipulator.should_receive(:new).with(kind_of(Chef::Node))
-#     .and_return(manipulator)
-#   manipulator.should_receive(:save!)
-# end
-
 require 'spec_helper'
 
-describe 'al_agent::default' do
+describe 'al_agents::_linux' do
   context 'with ubuntu' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
@@ -76,7 +69,7 @@ describe 'al_agent::default' do
           platform: 'centos',
           version: '6.6'
         ) do |node|
-          node.set['al_agent']['for_imaging'] = true
+          node.set['al_agents']['agent']['for_imaging'] = true
         end.converge(described_recipe)
       end
 
