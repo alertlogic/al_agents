@@ -1,138 +1,118 @@
-# al_agents cookbook
+Alert Logic Agent Cookbook
+=================
+This cookbook is used to install and configure the Alert Logic agent.
 
-Installs and configures Log and Threat Manager agents.
+Requirements
+------------
+The following platforms are tested directly under test kitchen.
 
-Log Manager collects and normalizes log data from your entire infrastructure.
-Threat Manager’s managed intrusion detection and vulnerability scanning services
-provide ongoing insights into the threats and vulnerabilities affecting your
-environment.
+- ubuntu-12.04
+- ubuntu-14.04
+- centos-6.4
+- centos-7.0
+- debian-7.8
+- fedora-19
+- windows-2012r2
 
-[![Build Status](https://travis-ci.org/alertlogic/al_agents.svg)](http://travis-ci.org/alertlogic/al_agents)
+#### Cookbook Dependencies
+- rsyslog
+- line
+- selinux_policy
 
-1. [Requirements](#requirements)
-2. [Chef recipes](#recipes)
-3. [CloudInit](#cloudinit)
-4. [Contributing](#contributing)
-5. [License](#license)
+Attributes
+----------
 
-## Requirements
+* `['al_agent']['agent']['registration_key']` - your required registration key. String defaults to `your_registration_key_here`
+* `['al_agent']['agent']['for_autoscaling']` - The for_autoscaling attribute determines if your installation will be configured as a `host` or `role` server.  By default for_autoscaling is set to `false` or in other words as a `host` install.  If autoscaling is set to `true` then the install is configured as a `role` server. Boolean defaults to `false`
+* `['al_agent']['agent']['for_imaging']` - The `for_imaging` attribute determines if the install process will continue or stop prior to provisioning.  If the `for_imaging` attribute is set to `true` then the install process perform an install only and stop before provisioning.  This allows for instance snapshots to be saved and started for later use.  With this attribute set to `false` then the provisioning process is performed during setup.  Boolean defaults to `false`
+* `['al_agent']['agent']['egress_url']` - By default all traffic is sent to https://vaporator.alertlogic.com:443.  This attribute is useful if you have a machine that is responsible for outbound traffic (NAT box).  If you specify your own URL ensure that it is a properly formatted URI.  String defaults to `https://vaporator.alertlogic.com:443`
 
-* Os: Ubuntu server 12.04, 13.10, Debian Squeeze or CentOS 6.5
-* Arch: x86_64, i386.
-* System logging: rsyslog, syslog-ng.
+Usage
+-----
+### al_agent::default
+The default recipe will attempt to perform an install best suited for your environment.  It will install the package for your system. The default attributes will install the agent in `host` mode (not for image capture).
+
+On linux, the default recipe includes an attempt to detect your logging system and adds a configuration directive for that logging system.  For more information see the al_agent::rsyslog and al_agent::syslog_ng recipes.  This recipe also includes an attempt to detect if selinux is installed on the machine.
+
+On both windows and linux the proper package is installed and the agent is started when the cookbook's defaults are used.
+
+### al_agent::rsyslog
+On linux, if you are using rsyslog and desire to skip an attempt at detection, you may run the al_agent::rsyslog recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
+
+### al_agent::syslog_ng
+On linux, if you are using syslog-ng and desire to skip an attempt at detection, you may run the al_agent::syslog_ng recipe independently.  Logging changes are added under the installation's subdirectory in a file named `alertlogic.conf`
+
+### al_agent::selinux
+On linux, if you are using selinux and desire to skip an attempt at detection, you may run the al_agent::selinux recipe independently. This recipe will add a selinux policy to allow for logging to port 1514.  This recipe does not enable nor disable selinux policy enforcement.
+
+### al_agent::install
+On linux, should you desire to install the package, configure and provision the machine you may run this recipe independently.
+
+### al_agent::start
+On linux, this recipe as stated starts the service.
 
 
-## Recipes
+Examples
+--------
 
-### al_agents::agent
-All the attributes are accessible under `node['alertlogic']['agent']`
-section.
-
-| Key                   | Description          | Default                               |
-| --------------------- | -------------------- | ------------------------------------- |
-| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
-| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST_"`       |
-| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
-| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
-| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
-| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
-
-
-Example:
+##### install example
 ```json
 {
-  "alertlogic": {
-      "agent": {
-          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
-      }
-  },
+  "name":"my_server",
   "run_list": [
-    "recipe[al_agents::agent]"
+    "recipe[al_agent]"
   ]
 }
 ```
 
-### al_agents::log_agent (DEPRECATED)
-All the attributes are accessible under `node['alertlogic']['log-agent']`
-section.
-
-| Key                   | Description          | Default                               |
-| --------------------- | -------------------- | ------------------------------------- |
-| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
-| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST_"`       |
-| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"-LATEST-1."`     |
-| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
-| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
-| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
-
-
-Example:
+##### à la carte recipe example (linux only)
 ```json
 {
-  "alertlogic": {
-      "log-agent": {
-          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
-      }
-  },
+  "name":"my_server",
   "run_list": [
-    "recipe[al_agents::log_agent]"
+    "recipe[al_agent::rsyslog, al_agent::install]"
   ]
 }
 ```
 
-### al_agents::threat_host (DEPRECATED)
-All the attributes are accessible under `node['alertlogic']['threat-host']`
-section.
 
-| Key                   | Description          | Default                               |
-| --------------------- | -------------------- | ------------------------------------- |
-| `['pkg_base_url']`    | Package download URL | "https://scc.alertlogic.net/software" |
-| `['pkg_vsn']['deb']`  | Debian package version to be downloaded | `"_LATEST."`       |
-| `['pkg_vsn']['rpm']`  | Redhat package version to be downloaded | `"_LATEST."`     |
-| `['controller_host']` | Controller host name | `"vaporator.alertlogic.com"`          |
-| `['inst_type']`       | Instance type. May be: "host", "role"   | `"host"`           |
-| `['firewall']`        | Array of allowed destination networks   | `["204.110.218.96/27:443", "185.54.124.96/27:443"]` |
-| `['provision_key']`   | Unique Registration Key, used during the provisioning stage **Must not be nil** | `nil` |
+Configurations
+--------------
+The attributes `for_autoscaling` and `for_imaging` determine your installation type.  They are boolean values and by default both of those values are `false`.  As boolean values, you can create a matrix of four possible configuration outcomes.  It is worth mentioning those configurations.
 
+1. host (default) when `for_autoscaling = false` and `for_imaging = false`
+2. host for imaging when `for_autoscaling = false` and `for_imaging = true`
+3. role when `for_autoscaling = true` and `for_imaging = false`
+4. role for imaging when `for_autoscaling = true` and `for_imaging = true`
 
-Example:
-```json
-{
-  "alertlogic": {
-      "threat-host": {
-          "provision_key": "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcd"
-      }
-  },
-  "run_list": [
-    "recipe[al_agents::threat_host]"
-  ]
-}
-```
+Performing an agent install using the cookbook's default attributes, will setup the agent as a `host` type and provision the instance immediately. see *configuration #1* above.  If you have properly set your registration key, your host should appear within Alert Logic's Console within 15 minutes.
 
-## CloudInit
-[CloudInit](http://cloudinit.readthedocs.org/) is the way to install something
-onto cloud instances (i.e. amazon ec2).
-You may find useful examples under [cloud-init](cloud-init/) directory.
-In case of amazon ec2 just pass this .yml file as `user-data`, do not forget
-to change `provision_key`.
-This will install chef-client to your instance, download this cookbook and
-run `chef-solo`.
+Testing
+-------
 
-Note that in case of amazon ec2 `user-data` will be accessible to any
-user from within this instance.
+In the root of the project:
+* to execute rubocop: `rubocop .`
+* to execute foodcritic: `foodcritic .`
+* to execute chefspec: `rspec spec`
+* to execute test kitchen: `kitchen test`
 
 
-## Contributing
+Troubleshooting
+---------------
+
+If the cookbook fails at the provisioning step, one cause is that the agent cannot connect to the egress_url.  Ensure that the proper permissions are configured on the security groups and ACLs to allow for outbound access.  Also check your egress_url attribute and ensure that it is a properly formatted URI.
+
+
+Contributing
+------------
 
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
 4. Write tests for your change (if applicable)
 5. Run the tests, ensuring they all pass
-6. Submit a Pull Request to `master` branch using Github
+6. Submit a Pull Request using Github
 
-## License
-
-Distributed under the Apache 2.0 license.
+License and Authors
+-------------------
+Authors: John Ramos (john.ramos@dualspark.com)
