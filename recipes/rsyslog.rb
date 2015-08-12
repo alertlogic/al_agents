@@ -1,3 +1,5 @@
+::Chef::Recipe.send(:include, AlAgents::Helpers)
+
 config_prefix = node['rsyslog']['config_prefix']
 template "#{config_prefix}/rsyslog.d/alertlogic.conf" do
   source 'rsyslog/alertlogic.conf.erb'
