@@ -1,3 +1,6 @@
+::Chef::Recipe.send(:include, AlAgents::Helpers)
+::Chef::Resource.send(:include, AlAgents::Helpers)
+
 cache_dir = Chef::Config[:file_cache_path]
 basename = agent_file(node['al_agents']['package']['url'])
 cached_package = ::File.join(cache_dir, basename)
