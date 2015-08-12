@@ -94,7 +94,7 @@ GEM
     fauxhai (2.3.0)
       net-ssh
       ohai
-    ffi (1.9.8)
+    ffi (1.9.10)
     ffi-yajl (2.2.0)
       libyajl2 (~> 1.2)
     foodcritic (4.0.0)
@@ -142,7 +142,7 @@ GEM
     mixlib-config (2.2.1)
     mixlib-log (1.6.0)
     mixlib-shellout (2.0.1)
-    multi_json (1.11.0)
+    multi_json (1.11.2)
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
@@ -274,7 +274,7 @@ GEM
       nori (~> 2.0)
       rubyntlm (~> 0.4.0)
       uuidtools (~> 2.1.2)
-    winrm-transport (1.0.1)
+    winrm-transport (1.0.2)
       rubyzip (~> 1.1, >= 1.1.7)
       winrm (~> 1.3)
     wmi-lite (1.0.0)
