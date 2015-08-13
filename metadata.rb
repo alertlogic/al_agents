@@ -11,6 +11,7 @@ version '1.0.3'
 depends 'selinux_policy'
 depends 'rsyslog'
 depends 'line'
+depends 'mysql', '~> 5.6.0'
 
 supports 'debian'
 supports 'ubuntu'
