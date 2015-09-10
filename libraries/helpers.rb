@@ -65,9 +65,14 @@ module AlAgents
       end
     end
 
+    def proxy_url
+      node['al_agents']['agent']['proxy_url']
+    end
+
     def configure_options
       egress = Chef::Recipe::Egress.new(node)
       options = []
+      options << "--proxy #{proxy_url}" unless proxy_url.nil?
       options << "--host #{egress.host}:#{egress.port}"
       options.join(' ')
     end
