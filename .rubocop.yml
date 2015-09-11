@@ -5,4 +5,5 @@ AllCops:
 Metrics/LineLength:
   Max: 120
 
-# rubocop:disable Metrics/AbcSize
+Metrics/AbcSize:
+  Max: 20
