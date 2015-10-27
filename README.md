@@ -104,6 +104,21 @@ Troubleshooting
 If the cookbook fails at the provisioning step, one cause is that the agent cannot connect to the egress_url.  Ensure that the proper permissions are configured on the security groups and ACLs to allow for outbound access.  Also check your egress_url attribute and ensure that it is a properly formatted URI.
 
 
+## CloudInit
+Alert Logic provides an [example](https://github.com/alertlogic/al-agents-cloud-init) 
+for using [CloudInit](http://cloudinit.readthedocs.org/) and chef-solo to install and configure agents. 
+[CloudInit](http://cloudinit.readthedocs.org/) is the way to install something
+onto cloud instances (i.e. amazon ec2).
+In case of amazon ec2 just pass this .yml file as `user-data`, do not forget
+to change `registration_key`. If you would like to route traffic through a SOCKS 
+or HTTP proxy, set the `proxy_url` value to point to your specific proxy.
+This will install chef-client to your instance, download this cookbook and
+run `chef-solo`.
+
+Note that in case of amazon ec2 `user-data` will be accessible to any
+user from within this instance.
+
+
 Contributing
 ------------
 
@@ -116,4 +131,9 @@ Contributing
 
 License and Authors
 -------------------
-Authors: John Ramos (john.ramos@dualspark.com)
+License:
+Distributed under the Apache 2.0 license.
+
+Authors: 
+John Ramos (john.ramos@dualspark.com)
+Justin Early (jearly@alertlogic.com)
