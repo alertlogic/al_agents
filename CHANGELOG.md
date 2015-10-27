@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.0.6
+-----
+- Justin Early - Added CloudInit example and updated license
+
 1.0.5
 -----
 - Justin Early - fixed rhel6x al-agent package installation
