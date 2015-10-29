@@ -1,3 +1,6 @@
+[![Build Status](https://api.travis-ci.org/alertlogic/al_agents.svg?branch=master)](https://travis-ci.org/alertlogic/al_agents)
+
+
 Alert Logic Agent Cookbook
 =================
 This cookbook is used to install and configure the Alert Logic agent.
