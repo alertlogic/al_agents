@@ -1,13 +1,17 @@
 language: ruby
-bundler_args: --without development
+bundler_args: "--without development"
 script:
-  - 'bundle exec rubocop .'
-  - 'bundle exec foodcritic -f any .'
-  - 'bundle exec rspec spec'
+- bundle exec rubocop .
+- bundle exec foodcritic -f any .
+- bundle exec rspec spec
 rvm:
-  - 2.2.2
+- 2.2.2
 gemfile:
-  - Gemfile
+- Gemfile
 branches:
   only:
-    - master
+  - master
+notifications:
+  hipchat:
+    rooms:
+      secure: lJzpsnZYOmP9pruVuBTtZ6bNamb3jTqak6dTwC137jy3MD69/UChI8841KDN+64fsVFUy1DobCZOwBO5Vbb95Wa5O1JjCrkq+Lfonh0oxzyPAYGpvF+cmzQtppRt1HzSqgm6G0XCO/+RgtKJSZfxJJNwPpQyGUxM0ESGf/vUmGc=
