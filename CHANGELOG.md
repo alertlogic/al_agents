@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.0.7
+-----
+- Justin Early - Pin rsyslog cookbook to version 2.2.0
+
 1.0.6
 -----
 - Justin Early - Added CloudInit example and updated license
