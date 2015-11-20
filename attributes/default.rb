@@ -18,7 +18,7 @@ when 'rhel', 'fedora'
   if node['platform_version'].to_i >= 6
     default['al_agents']['syslog_ng']['source_log'] = 's_all'
   else
-      default['al_agents']['syslog_ng']['source_log'] = 's_sys'
+    default['al_agents']['syslog_ng']['source_log'] = 's_sys'
   end
   if node['kernel']['machine'] == 'x86_64'
     default['al_agents']['package']['url'] = 'https://scc.alertlogic.net/software/al-agent-LATEST-1.x86_64.rpm'
