@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.0.9
+-----
+- Spencer Owen / Justin Early - Fix windows_guard issue opening .pem file. Fix for_imaging logic
+
 1.0.8
 -----
 - Justin Early - Set syslog_ng to use s_all for CentOS version 6 and up
