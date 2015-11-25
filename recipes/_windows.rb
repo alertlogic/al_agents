@@ -17,7 +17,7 @@ package basename do
   source cached_package
   action :install
   options windows_options
-  not_if windows_install_guard
+  not_if { ::File.exist?(windows_install_guard) }
 end
 
 include_recipe 'al_agents::start' unless for_imaging
