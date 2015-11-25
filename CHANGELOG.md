@@ -5,7 +5,7 @@ This file is used to list changes made in each version of the al_agents cookbook
 
 1.0.9
 -----
-- Spencer Owen - Fix windows_guard issue opening .pem file
+- Spencer Owen / Justin Early - Fix windows_guard issue opening .pem file. Fix for_imaging logic
 
 1.0.8
 -----
