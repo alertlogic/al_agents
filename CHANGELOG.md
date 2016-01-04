@@ -3,6 +3,9 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.0.10
+------
+- Justin Early - pin al-agent package version to >=0 to avoid error in Chef 12
 1.0.9
 -----
 - Spencer Owen / Justin Early - Fix windows_guard issue opening .pem file. Fix for_imaging logic

@@ -24,6 +24,7 @@ end
 package basename do
   source cached_package
   action :install
+  version '>=0'
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
   provider Chef::Provider::Package::Rpm if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 6
 end
