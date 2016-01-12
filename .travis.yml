@@ -11,7 +11,3 @@ gemfile:
 branches:
   only:
   - master
-notifications:
-  hipchat:
-    rooms:
-      secure: lJzpsnZYOmP9pruVuBTtZ6bNamb3jTqak6dTwC137jy3MD69/UChI8841KDN+64fsVFUy1DobCZOwBO5Vbb95Wa5O1JjCrkq+Lfonh0oxzyPAYGpvF+cmzQtppRt1HzSqgm6G0XCO/+RgtKJSZfxJJNwPpQyGUxM0ESGf/vUmGc=
