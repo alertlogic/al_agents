@@ -4,8 +4,6 @@
 #
 # Copyright 2015, AlertLogic
 #
-# All rights reserved - Do Not Redistribute
-#
 
 if platform_family?('windows')
   include_recipe 'al_agents::_windows'
