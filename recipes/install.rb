@@ -4,8 +4,6 @@
 #
 # Copyright 2015, AlertLogic
 #
-# All rights reserved - Do Not Redistribute
-#
 
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
 ::Chef::Resource.send(:include, AlAgents::Helpers)
