@@ -26,11 +26,6 @@ module AlAgents
       node['al_agents']['agent']['registration_key']
     end
 
-    # for_autoscaling: role ~> autoscaling = true, host ~> autoscaling = false
-    def for_autoscaling
-      node['al_agents']['agent']['for_autoscaling']
-    end
-
     # for_imaging: configure ~> run just the configure commands, provision ~> run the provision command
     def for_imaging
       node['al_agents']['agent']['for_imaging']
@@ -57,14 +52,6 @@ module AlAgents
       version_value
     end
 
-    def inst_type_value
-      if for_autoscaling
-        'role'
-      else
-        'host'
-      end
-    end
-
     def proxy_url
       node['al_agents']['agent']['proxy_url']
     end
@@ -80,14 +67,14 @@ module AlAgents
     def provision_options
       options = []
       options << "--key #{registration_key}"
-      options << "--inst-type #{inst_type_value}"
+      options << '--inst-type host'
       options.join(' ')
     end
 
     def windows_options
       egress = Chef::Recipe::Egress.new(node)
       windows_options = ["/quiet prov_key=#{registration_key}"]
-      windows_options << "prov_only=#{inst_type_value}" unless for_imaging == false
+      windows_options << 'prov_only=host' unless for_imaging == false
       windows_options << "USE_PROXY=#{proxy_url}" unless proxy_url.nil?
       windows_options << 'install_only=1' if for_imaging
       windows_options << "sensor_host=#{egress.sensor_host}"

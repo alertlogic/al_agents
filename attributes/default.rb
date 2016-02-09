@@ -6,8 +6,6 @@ default['al_agents']['agent']['egress_url'] = 'https://vaporator.alertlogic.com:
 
 default['al_agents']['agent']['proxy_url'] = nil
 
-default['al_agents']['agent']['for_autoscaling'] = false
-
 default['al_agents']['agent']['for_imaging'] = false
 
 default['al_agents']['package']['name'] = 'al-agent'

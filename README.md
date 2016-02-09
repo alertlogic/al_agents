@@ -26,7 +26,6 @@ Attributes
 ----------
 
 * `['al_agents']['agent']['registration_key']` - your required registration key. String defaults to `your_registration_key_here`
-* `['al_agents']['agent']['for_autoscaling']` - The for_autoscaling attribute determines if your installation will be configured as a `host` or `role` server.  By default for_autoscaling is set to `false` or in other words as a `host` install.  If autoscaling is set to `true` then the install is configured as a `role` server. Boolean defaults to `false`
 * `['al_agents']['agent']['for_imaging']` - The `for_imaging` attribute determines if the install process will continue or stop prior to provisioning.  If the `for_imaging` attribute is set to `true` then the install process perform an install only and stop before provisioning.  This allows for instance snapshots to be saved and started for later use.  With this attribute set to `false` then the provisioning process is performed during setup.  Boolean defaults to `false`
 * `['al_agents']['agent']['egress_url']` - By default all traffic is sent to https://vaporator.alertlogic.com:443.  This attribute is useful if you have a machine that is responsible for outbound traffic (NAT box).  If you specify your own URL ensure that it is a properly formatted URI.  String defaults to `https://vaporator.alertlogic.com:443`
 * `['al_agents']['agent']['proxy_url']` - By default al-agent does not require the use of a proxy.  This attribute is useful if you want to avoid a single point of egress.  When a proxy is used, both `['al_agents']['agent']['egress_url']` and `['al_agents']['agent']['proxy_url']` values are required.  If you specify a proxy URL ensure that it is a properly formatted URI.  String defaults to `nil`
@@ -82,14 +81,10 @@ Examples
 
 Configurations
 --------------
-The attributes `for_autoscaling` and `for_imaging` determine your installation type.  They are boolean values and by default both of those values are `false`.  As boolean values, you can create a matrix of four possible configuration outcomes.  It is worth mentioning those configurations.
+The attribute `for_imaging` determine your installation type.  It is a boolean value and by default is `false`.  Setting this value to true will prepare your agent for imaging only and will not provision the agent.
 
-1. host (default) when `for_autoscaling = false` and `for_imaging = false`
-2. host for imaging when `for_autoscaling = false` and `for_imaging = true`
-3. role when `for_autoscaling = true` and `for_imaging = false`
-4. role for imaging when `for_autoscaling = true` and `for_imaging = true`
 
-Performing an agent install using the cookbook's default attributes, will setup the agent as a `host` type and provision the instance immediately. see *configuration #1* above.  If you have properly set your registration key, your host should appear within Alert Logic's Console within 15 minutes.
+Performing an agent install using the cookbook's default attributes, will setup the agent and provision the instance immediately. see *configuration #1* above.  If you have properly set your registration key, your host should appear within Alert Logic's Console within 15 minutes.
 
 Testing
 -------
