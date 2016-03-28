@@ -14,7 +14,7 @@ module AlAgents
       Pathname.new(URI.parse(uri).path).basename.to_s
     end
 
-    def basename
+    def agent_basename
       agent_file(node['al_agents']['package']['url'])
     end
 

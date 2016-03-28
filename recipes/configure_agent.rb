@@ -8,7 +8,7 @@
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
 ::Chef::Resource.send(:include, AlAgents::Helpers)
 
-execute "configure #{basename}" do
+execute "configure #{agent_basename}" do
   user 'root'
   cwd '/etc/init.d'
   command "./al-agent configure #{configure_options}"

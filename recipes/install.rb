@@ -9,7 +9,7 @@
 ::Chef::Resource.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]
-cached_package = ::File.join(cache_dir, basename)
+cached_package = ::File.join(cache_dir, agent_basename)
 
 remote_file basename do
   path cached_package
@@ -18,7 +18,7 @@ remote_file basename do
 end
 
 # let ubuntu know to use dpkg not apt
-package basename do
+package agent_basename do
   source cached_package
   action :install
   version '>=0'
