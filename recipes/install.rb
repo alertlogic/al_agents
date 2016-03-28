@@ -9,17 +9,16 @@
 ::Chef::Resource.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]
-basename = agent_file(node['al_agents']['package']['url'])
-cached_package = ::File.join(cache_dir, basename)
+cached_package = ::File.join(cache_dir, agent_basename)
 
-remote_file basename do
+remote_file agent_basename do
   path cached_package
   source node['al_agents']['package']['url']
   action :create_if_missing
 end
 
 # let ubuntu know to use dpkg not apt
-package basename do
+package agent_basename do
   source cached_package
   action :install
   version '>=0'
@@ -27,15 +26,5 @@ package basename do
   provider Chef::Provider::Package::Rpm if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 6
 end
 
-execute "configure #{basename}" do
-  user 'root'
-  cwd '/etc/init.d'
-  command "./al-agent configure #{configure_options}"
-end
-
-execute "provision #{basename}" do
-  user 'root'
-  cwd '/etc/init.d'
-  command "./al-agent provision #{provision_options}"
-  not_if { ::File.exist?('/var/alertlogic/etc/host_key.pem') }
-end
+include_recipe 'al_agents::configure_agent' unless for_imaging
+include_recipe 'al_agents::provision_agent' unless for_imaging

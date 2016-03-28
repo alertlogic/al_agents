@@ -2,10 +2,9 @@
 ::Chef::Resource.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]
-basename = agent_file(node['al_agents']['package']['url'])
-cached_package = ::File.join(cache_dir, basename)
+cached_package = ::File.join(cache_dir, agent_basename)
 
-remote_file basename do
+remote_file agent_basename do
   path cached_package
   source node['al_agents']['package']['url']
   action :create_if_missing
@@ -13,7 +12,7 @@ end
 
 # test kitchen issue: the reinstall causes an issue
 #   https://github.com/chef/chef/issues/3055s
-package basename do
+package agent_basename do
   source cached_package
   action :install
   options windows_options
