@@ -11,7 +11,7 @@
 cache_dir = Chef::Config[:file_cache_path]
 cached_package = ::File.join(cache_dir, agent_basename)
 
-remote_file basename do
+remote_file agent_basename do
   path cached_package
   source node['al_agents']['package']['url']
   action :create_if_missing
