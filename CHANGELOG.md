@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.1.1
+------
+- Justin Early - Removing port from egress url
+
 1.1.0
 ------
 - Justin Early - Deprecating --inst-type role from provisioning options

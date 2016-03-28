@@ -2,7 +2,7 @@
 # registration key is a must
 default['al_agents']['agent']['registration_key'] = 'your_registration_key_here'
 
-default['al_agents']['agent']['egress_url'] = 'https://vaporator.alertlogic.com:443'
+default['al_agents']['agent']['egress_url'] = 'https://vaporator.alertlogic.com'
 
 default['al_agents']['agent']['proxy_url'] = nil
 
