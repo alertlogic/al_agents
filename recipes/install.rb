@@ -9,7 +9,6 @@
 ::Chef::Resource.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]
-basename = agent_file(node['al_agents']['package']['url'])
 cached_package = ::File.join(cache_dir, basename)
 
 remote_file basename do
@@ -27,15 +26,5 @@ package basename do
   provider Chef::Provider::Package::Rpm if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 6
 end
 
-execute "configure #{basename}" do
-  user 'root'
-  cwd '/etc/init.d'
-  command "./al-agent configure #{configure_options}"
-end
-
-execute "provision #{basename}" do
-  user 'root'
-  cwd '/etc/init.d'
-  command "./al-agent provision #{provision_options}"
-  not_if { ::File.exist?('/var/alertlogic/etc/host_key.pem') }
-end
+include_recipe 'al_agents::configure_agent' unless for_imaging
+include_recipe 'al_agents::provision_agent' unless for_imaging
