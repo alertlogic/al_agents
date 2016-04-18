@@ -29,6 +29,8 @@ Attributes
 * `['al_agents']['agent']['for_imaging']` - The `for_imaging` attribute determines if the agent will be configured and provisioned.  If the `for_imaging` attribute is set to `true` then the install process performs an installation of the agent but will not start the agent once installation is completed.  This allows for instance snapshots to be saved and started for later use.  With this attribute set to `false` then the provisioning process is performed during setup and the agent is started once complete.  Boolean defaults to `false`
 * `['al_agents']['agent']['egress_url']` - By default all traffic is sent to https://vaporator.alertlogic.com.  This attribute is useful if you have a machine that is responsible for outbound traffic (NAT box).  If you specify your own URL ensure that it is a properly formatted URI.  String defaults to `https://vaporator.alertlogic.com`
 * `['al_agents']['agent']['proxy_url']` - By default al-agent does not require the use of a proxy.  This attribute is useful if you want to avoid a single point of egress.  When a proxy is used, both `['al_agents']['agent']['egress_url']` and `['al_agents']['agent']['proxy_url']` values are required.  If you specify a proxy URL ensure that it is a properly formatted URI.  String defaults to `nil`
+* `['al_agents']['agent']['ignore_failure']` - Ingore installation and configuration errors. Boolean defaults to `false`
+
 
 Usage
 -----
