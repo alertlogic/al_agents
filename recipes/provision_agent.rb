@@ -12,5 +12,6 @@ execute "provision #{agent_basename}" do
   user 'root'
   cwd '/etc/init.d'
   command "./al-agent provision #{provision_options}"
+  ignore_failure node['al_agents']['agent']['ignore_failure']
   not_if { ::File.exist?('/var/alertlogic/etc/host_key.pem') }
 end

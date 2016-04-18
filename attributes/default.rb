@@ -10,6 +10,8 @@ default['al_agents']['agent']['for_imaging'] = false
 
 default['al_agents']['package']['name'] = 'al-agent'
 
+default['al_agents']['agent']['ignore_failure'] = false
+
 case node['platform_family']
 when 'rhel', 'fedora'
   default['al_agents']['agent']['service_name'] = 'al-agent'
