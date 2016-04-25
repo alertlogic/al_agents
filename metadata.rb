@@ -3,10 +3,10 @@ maintainer 'Justin Early'
 maintainer_email 'jearly@alertlogic.com'
 source_url 'https://github.com/alertlogic/al_agents'
 issues_url 'https://github.com/alertlogic/al_agents/issues'
-license 'All rights reserved'
+license 'Apache 2.0 License'
 description 'Installs/Configures the Alert Logic Agent'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '1.3.0'
+version '1.3.1'
 
 depends 'selinux_policy'
 depends 'rsyslog', '= 2.2.0'
