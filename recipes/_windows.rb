@@ -1,5 +1,5 @@
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
-::Chef::Resource.send(:include, AlAgents::Helpers)
+::Chef::Resource::Batch.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]
 cached_package = ::File.join(cache_dir, agent_basename)
