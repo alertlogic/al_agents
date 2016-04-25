@@ -6,7 +6,7 @@
 #
 
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
-::Chef::Resource.send(:include, AlAgents::Helpers)
+::Chef::Resource::Batch.send(:include, AlAgents::Helpers)
 
 execute "provision #{agent_basename}" do
   user 'root'
