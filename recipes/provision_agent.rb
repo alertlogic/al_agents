@@ -6,9 +6,9 @@
 #
 
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
-::Chef::Resource::Batch.send(:include, AlAgents::Helpers)
 
 execute "provision #{agent_basename}" do
+  extend(AlAgents::Helpers)
   user 'root'
   cwd '/etc/init.d'
   command "./al-agent provision #{provision_options}"
