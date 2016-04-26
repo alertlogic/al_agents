@@ -18,8 +18,8 @@ module AlAgents
       agent_file(node['al_agents']['package']['url'])
     end
 
-    def service_name
-      node['al_agents']['agent']['service_name']
+    def al_agent_service
+      node['al_agents']['agent']['al_agent_service']
     end
 
     def windows_install_guard

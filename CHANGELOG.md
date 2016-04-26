@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.3.1
+------
+- Justin Early - Extend batch resources to avoid conflicts
+
 1.3.0
 ------
 - Justin Early - adding ignore_failure attribute
