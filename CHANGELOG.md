@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.3.2
+------
+- Fred Reimer - Add port for selinux instead of using resource name
+
 1.3.1
 ------
 - Justin Early - Extend batch resources to avoid conflicts
