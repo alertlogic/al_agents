@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.3.4
+------
+- Justin Early - Restoring respond_to feature from commit a08589a
+
 1.3.3
 ------
 - Justin Early - Adjust configure_options to pass host and port separately.
