@@ -97,6 +97,16 @@ In the root of the project:
 * to execute chefspec: `rspec spec`
 * to execute test kitchen: `kitchen test`
 
+Kitchen Tests
+-------------
+
+Edit .kitchen.yml and uncomment the attributes section, replacing the `registration_key` attribute with your Alert Logic Unique Registration Key
+``` attributes:
+       al_agents:
+         agent:
+           registration_key: 'your_key_here'
+```
+Note: If you do not put your Alert Logic registration key in as an override attribute, the tests will fail when attempting to execute the provisioning recipe.
 
 Troubleshooting
 ---------------
