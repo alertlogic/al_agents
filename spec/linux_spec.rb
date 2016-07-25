@@ -13,11 +13,11 @@ describe 'al_agents::_linux' do
     let(:remote_file) { "#{Chef::Config[:file_cache_path]}/#{package_name}" }
 
     it 'downloads al-agent' do
-      expect(chef_run).to create_remote_file_if_missing("#{remote_file}")
+      expect(chef_run).to create_remote_file_if_missing(remote_file.to_s)
     end
 
     it 'installs al-agent' do
-      expect(chef_run).to install_package("#{package_name}")
+      expect(chef_run).to install_package(package_name.to_s)
     end
 
     it 'creates a controller_host file? || it executes the configure command' do
@@ -48,11 +48,11 @@ describe 'al_agents::_linux' do
     let(:remote_file) { "#{Chef::Config[:file_cache_path]}/#{package_name}" }
 
     it 'downloads al-agent' do
-      expect(chef_run).to create_remote_file_if_missing("#{remote_file}")
+      expect(chef_run).to create_remote_file_if_missing(remote_file.to_s)
     end
 
     it 'installs al-agent' do
-      expect(chef_run).to install_package("#{package_name}")
+      expect(chef_run).to install_package(package_name.to_s)
     end
 
     it 'creates a controller_host file? || it executes the configure command' do
