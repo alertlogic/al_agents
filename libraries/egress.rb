@@ -9,15 +9,19 @@ class Chef
         @url = node['al_agents']['agent']['egress_url']
       end
 
+      # rubocop:disable Alias
       def host
         parsed_url.host || 'vaporator.alertlogic.com'
       end
-      alias sensor_host host
+      alias_method :sensor_host, :host
+      # rubocop:enable Alias
 
+      # rubocop:disable Alias
       def port
         parsed_url.port || 443
       end
-      alias sensor_port port
+      alias_method :sensor_port, :port
+      # rubocop:enable Alias
 
       private
 
