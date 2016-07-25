@@ -18,7 +18,6 @@ platforms:
       box: opentable/win-2012r2-standard-amd64-nocm
       customize:
         vram: 64
-
 suites:
   - name: default
     run_list:

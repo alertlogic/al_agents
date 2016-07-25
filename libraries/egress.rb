@@ -12,12 +12,12 @@ class Chef
       def host
         parsed_url.host || 'vaporator.alertlogic.com'
       end
-      alias_method :sensor_host, :host
+      alias sensor_host host
 
       def port
         parsed_url.port || 443
       end
-      alias_method :sensor_port, :port
+      alias sensor_port port
 
       private
 

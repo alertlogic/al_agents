@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'vendor/**/*'
+    - 'Vagrantfile'
 
 Metrics/LineLength:
   Max: 120

@@ -14,7 +14,7 @@ describe 'al_agents::_windows' do
     end
 
     it 'downloads the file' do
-      expect(chef_run).to create_remote_file_if_missing("#{remote_file}")
+      expect(chef_run).to create_remote_file_if_missing(remote_file.to_s)
     end
 
     it 'starts the service' do
