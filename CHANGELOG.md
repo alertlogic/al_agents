@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.3.5
+-----
+- Andrés Vargas - Make package repository configurable
+
 1.3.4
 ------
 - Justin Early - Restoring respond_to feature from commit a08589a
