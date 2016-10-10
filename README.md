@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/alertlogic/al_agents.svg?branch=master)](https://travis-ci.org/alertlogic/al_agents)
+[![Build Status](https://api.travis-ci.org/alertlogic/al_agents.svg?branch=master)](https://travis-ci.org/alertlogic/al_agents)[![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/al_agents-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/al_agents-cookbook/)
 
 
 Alert Logic Agent Cookbook
