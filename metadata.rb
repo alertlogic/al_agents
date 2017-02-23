@@ -9,7 +9,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '1.3.6'
 
 depends 'selinux_policy'
-depends 'rsyslog', '= 2.2.0'
+depends 'rsyslog', '~> 5.1.0'
 depends 'line'
 
 supports 'debian'
