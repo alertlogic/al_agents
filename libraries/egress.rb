@@ -27,7 +27,7 @@ class Chef
 
       def schemed_url
         schemed = url
-        schemed = "http://#{url}" unless url =~ %r{^http:\/\/}i || url =~ %r{^https:\/\/}i
+        schemed = "https://#{url}" unless url =~ %r{^http:\/\/}i
         schemed
       end
 
