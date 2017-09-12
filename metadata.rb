@@ -7,6 +7,7 @@ license 'Apache 2.0 License'
 description 'Installs/Configures the Alert Logic Agent'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '1.3.6'
+chef_version '>= 12.5' if respond_to?(:chef_version)
 
 depends 'selinux_policy'
 depends 'rsyslog', '~> 5.1.0'
