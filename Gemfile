@@ -9,13 +9,13 @@ gem 'berkshelf'
 #   gem "vagrant-omnibus", github: "schisamo/vagrant-omnibus"
 # end
 
-gem 'test-kitchen'
-gem 'kitchen-vagrant'
 gem 'kitchen-ec2'
+gem 'kitchen-vagrant'
+gem 'test-kitchen'
 gem 'winrm-transport'
 
-gem 'rubocop'
 gem 'foodcritic'
+gem 'rubocop'
 
 gem 'chefspec'
 gem 'fauxhai'
