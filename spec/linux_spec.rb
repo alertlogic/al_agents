@@ -78,4 +78,21 @@ describe 'al_agents::_linux' do
       # end
     end
   end
+
+  context 'with rhel (with selinux)' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'redhat',
+        version: '7.3'
+      ).converge(described_recipe)
+    end
+
+    before do
+      allow_any_instance_of(Chef::Recipe).to receive(:selinux_enabled?).and_return(true)
+    end
+
+    it 'adds selinux port' do
+      expect(chef_run).to addormodify_selinux_policy_port('1514')
+    end
+  end
 end

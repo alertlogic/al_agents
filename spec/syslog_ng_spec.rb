@@ -1,36 +1,64 @@
 require 'spec_helper'
 
 describe 'al_agents::syslog_ng' do
-  let(:chef_run) do
-    ChefSpec::SoloRunner.new(
-      platform: 'ubuntu',
-      version: '12.04'
-    ).converge(described_recipe)
+  context 'on ubuntu with syslog_ng (3.2.5)' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ).converge(described_recipe)
+    end
+    let(:shellout) { double(run_command: nil, error!: nil, stdout: 'syslog-ng 3.2.5', stderr: double(empty?: true)) }
+    let(:syslog_ng_conf) { '/etc/syslog-ng/syslog-ng.conf' }
+    let(:syslog_ng_dir) { '/etc/syslog-ng/conf.d' }
+    let(:alertlogic_conf_file) { "#{syslog_ng_dir}/alertlogic.conf" }
+
+    before do
+      # Mixlib::ShellOut.stub(:new).and_return(shellout)
+      allow(Mixlib::ShellOut).to receive(:new).and_return(shellout)
+    end
+
+    it 'creates an alertlogic.conf file' do
+      expect(chef_run).to render_file(alertlogic_conf_file)
+    end
+
+    it 'ensures the syslog-ng directory exist' do
+      expect(chef_run).to create_directory(syslog_ng_dir)
+    end
+
+    it 'notifies the syslog_ng service to restart' do
+      template = chef_run.template(alertlogic_conf_file)
+      expect(template).to notify('service[syslog-ng]').to(:restart)
+    end
+
+    it 'starts the service' do
+      expect(chef_run).to start_service('syslog-ng')
+    end
   end
   let(:shellout) { double(run_command: nil, error!: nil, stdout: 'syslog-ng 3.2.5', stderr: double(empty?: true)) }
   let(:syslog_ng_conf) { '/etc/syslog-ng/syslog-ng.conf' }
   let(:syslog_ng_dir) { '/etc/syslog-ng/conf.d' }
   let(:alertlogic_conf_file) { "#{syslog_ng_dir}/alertlogic.conf" }
 
-  before do
-    # Mixlib::ShellOut.stub(:new).and_return(shellout)
-    allow(Mixlib::ShellOut).to receive(:new).and_return(shellout)
-  end
+  context 'on ubuntu with syslog_ng (3.1.0)' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ).converge(described_recipe)
+    end
+    let(:shellout) { double(run_command: nil, error!: nil, stdout: 'syslog-ng 3.1.0', stderr: double(empty?: true)) }
+    let(:syslog_ng_conf) { '/etc/syslog-ng/syslog-ng.conf' }
+    let(:syslog_ng_dir) { '/etc/syslog-ng/conf.d' }
+    let(:alertlogic_conf_file) { "#{syslog_ng_dir}/alertlogic.conf" }
 
-  it 'creates an alertlogic.conf file' do
-    expect(chef_run).to render_file(alertlogic_conf_file)
-  end
+    before do
+      # Mixlib::ShellOut.stub(:new).and_return(shellout)
+      allow(Mixlib::ShellOut).to receive(:new).and_return(shellout)
+    end
 
-  it 'ensures the syslog-ng directory exist' do
-    expect(chef_run).to create_directory(syslog_ng_dir)
-  end
-
-  it 'notifies the syslog_ng service to restart' do
-    template = chef_run.template(alertlogic_conf_file)
-    expect(template).to notify('service[syslog-ng]').to(:restart)
-  end
-
-  it 'starts the service' do
-    expect(chef_run).to start_service('syslog-ng')
+    it 'should append a line to the alertlogic.conf' do
+      expect(chef_run).to edit_append_if_no_line('add an include to alertlogic.conf')
+    end
   end
 end

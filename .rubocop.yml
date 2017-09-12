@@ -8,3 +8,19 @@ Metrics/LineLength:
 
 Metrics/AbcSize:
   Max: 20
+
+# Adding rubocop exclude, this passes with cookstyle.
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/BlockLength:
+  Max: 90
+
+# Adding rubocop exclude, this passes with cookstyle.
+# SupportedStyles: prefer_alias, prefer_alias_method
+Style/Alias:
+  Exclude:
+    - 'libraries/egress.rb'
+
+# Adding rubocop exclude, this passes with cookstyle.
+# SupportedStyles: percent, brackets
+Style/SymbolArray:
+  EnforcedStyle: brackets
