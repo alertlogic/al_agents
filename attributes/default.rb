@@ -15,7 +15,7 @@ default['al_agents']['agent']['ignore_failure'] = false
 default['al_agents']['package']['base_url'] = 'https://scc.alertlogic.net/software/'
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   default['al_agents']['agent']['al_agent_service'] = 'al-agent'
   default['al_agents']['syslog_ng']['source_log'] = if node['platform_version'].to_i >= 6
                                                       's_all'
