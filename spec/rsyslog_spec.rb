@@ -4,7 +4,7 @@ describe 'al_agents::rsyslog' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new(
       platform: 'ubuntu',
-      version: '12.04'
+      version: '14.04'
     ).converge(described_recipe)
   end
   let(:alertlogic_conf_file) { '/etc/rsyslog.d/alertlogic.conf' }

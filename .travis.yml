@@ -5,7 +5,7 @@ script:
 - bundle exec foodcritic -f any .
 - bundle exec rspec spec
 rvm:
-- 2.2.2
+- 2.3.1
 gemfile:
 - Gemfile
 branches:

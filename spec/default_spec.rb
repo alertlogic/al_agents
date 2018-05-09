@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe 'al_agents::default' do
-  context 'on the linux platform family' do
+  context 'on ubuntu (without selinux)' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '12.04'
+        version: '14.04'
       ).converge(described_recipe)
+    end
+
+    before do
+      allow_any_instance_of(Chef::Recipe).to receive(:selinux_enabled?).and_return(false)
     end
 
     it 'includes the linux recipe' do

@@ -25,7 +25,7 @@ describe 'al_agents::_windows' do
       context 'that doesn\'t have a scheme' do
         let(:chef_run) do
           ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
-            node.set['al_agents']['agent']['egress_url'] = 'vaporator.alertlogic.com:443'
+            node.normal['al_agents']['agent']['egress_url'] = 'vaporator.alertlogic.com:443'
           end.converge(described_recipe)
         end
 
@@ -38,7 +38,7 @@ describe 'al_agents::_windows' do
         context 'and for_imaging' do
           let(:chef_run) do
             ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
-              node.set['al_agents']['agent']['for_imaging'] = true
+              node.normal['al_agents']['agent']['for_imaging'] = true
             end.converge(described_recipe)
           end
 
@@ -52,7 +52,7 @@ describe 'al_agents::_windows' do
       # context 'that has an invalid egress_url' do
       #   let(:chef_run) do
       #     ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
-      #       node.set['al_agents']['agent']['egress_url'] = 'bad_string'
+      #       node.normal['al_agents']['agent']['egress_url'] = 'bad_string'
       #     end.converge(described_recipe)
       #   end
       #

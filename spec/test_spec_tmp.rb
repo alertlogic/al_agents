@@ -6,7 +6,7 @@ describe 'al_agents::default' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '12.04'
+        version: '14.04'
       ).converge(described_recipe)
     end
 
