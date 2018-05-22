@@ -47,11 +47,11 @@ module AlAgents
     def syslog_ng_pre33
       vers = Mixlib::ShellOut.new('syslog-ng -V')
       vers.run_command
-      syslog_ng_version(vers.stdout) <= 3.2 ? true : false
+      syslog_ng_version(vers.stdout) <= 3.2
     end
 
-    def syslog_ng_version(t)
-      version = t.split(/\n/)[0]
+    def syslog_ng_version(sver)
+      version = sver.split(/\n/)[0]
       version_value = version.split[1].to_f
       version_value
     end
