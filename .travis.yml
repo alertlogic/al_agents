@@ -8,6 +8,9 @@ rvm:
 - 2.3.1
 gemfile:
 - Gemfile
+install:
+# This fixes https://github.com/rubygems/rubygems/issues/2213
+- sudo gem update --system 2.7.5
 branches:
   only:
   - master
