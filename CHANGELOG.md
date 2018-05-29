@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.4.0
+-----
+- Justin Early/mitom - Fix linting, Add base support for 'amazon' deployment
+
 1.3.6
 -----
 - Justin Early - Use rpm package library when rhel >= 6
