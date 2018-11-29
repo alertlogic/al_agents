@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name 'al_agents'
 maintainer 'Justin Early'
 maintainer_email 'jearly@alertlogic.com'

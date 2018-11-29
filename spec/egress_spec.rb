@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 class Chef
   # namespaced to Chef::Recipe

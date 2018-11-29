@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 directory '/etc/syslog-ng/conf.d' do
   owner 'root'
   group 'root'

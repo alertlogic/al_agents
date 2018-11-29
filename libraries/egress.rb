@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Chef
   class Recipe
     # preparing the Egress URL
