@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
 
 cache_dir = Chef::Config[:file_cache_path]

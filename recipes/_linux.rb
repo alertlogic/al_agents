@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ::Chef::Recipe.send(:include, AlAgents::Helpers)
 
 include_recipe 'al_agents::selinux' if selinux_enabled?

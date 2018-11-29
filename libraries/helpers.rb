@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # bring in the selinux_enabled? method
 Chef::Recipe.send(:include, Chef::Util::Selinux)
 

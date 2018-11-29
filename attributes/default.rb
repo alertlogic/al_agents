@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # registration key is a must
 default['al_agents']['agent']['registration_key'] = 'your_registration_key_here'
