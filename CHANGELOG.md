@@ -3,6 +3,10 @@ al_agents CHANGELOG
 
 This file is used to list changes made in each version of the al_agents cookbook.
 
+1.4.2
+-----
+- David Kane - Add Suse support
+
 1.4.1
 -----
 - Justin Early - Fix outdated pin to rsyslog cookbook version; Linting fixes
