@@ -27,9 +27,10 @@ package agent_basename do
   version '>=0'
   ignore_failure node['al_agents']['agent']['ignore_failure']
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+  provider Chef::Provider::Package::Rpm if node['platform_family'] == 'suse'
   provider Chef::Provider::Package::Rpm if (
-    node['platform_family'] == 'rhel' &&
-    node['platform_version'].to_i >= 6) || node['platform_family'] == 'amazon'
+  node['platform_family'] == 'rhel' &&
+      node['platform_version'].to_i >= 6) || node['platform_family'] == 'amazon'
 end
 
 include_recipe 'al_agents::configure_agent' unless for_imaging
